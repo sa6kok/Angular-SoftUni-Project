@@ -1,0 +1,45 @@
+<div class="container">
+<h2 class="text-center pt-5" th:text="${message}"></h2>
+    <ng-container *ngIf="!properties" class="align-items-center">
+        <h2 class="text-center">No Properties!</h2>
+        <a th:href="@{/search/country}"><h2 class="text-center">Search for other properties!</h2></a>
+    </ng-container>
+    <ng-container *ngIf="properties">
+    <div class="row" >
+        <div class="col-lg-4 col-sm-6 portfolio-item" *ngFor="let property of properties">
+           <button (click)="sendProperty(property)"><div class="card h-100">
+                <ng-container>
+                        <img class="card-img-top" [src]="property.firstPicture"
+                             th:alt="property.name" sec:authorize="hasRole('ROLE_GUEST')">
+                </ng-container>
+                <ng-container *ngIf="withDates">
+                    <a th:href="|/reservation/details/${property.getId()}|" sec:authorize="hasRole('ROLE_GUEST')">
+                        <img class="card-img-top" th:src="${property.getFirstPicture()}"
+                             th:alt="${property.getName()}" ></a>
+                    <a th:href="|/property/details/${property.getId()}|" sec:authorize="hasRole('ROLE_HOST')">
+                        <img class="card-img-top" th:src="${property.getFirstPicture()}"
+                             th:alt="${property.getName()}"></a>
+                    <a th:href="|/reservation/details/${property.getId()}|" sec:authorize="isAnonymous()">
+                        <img class="card-img-top" th:src="${property.getFirstPicture()}"
+                             th:alt="${property.getName()}" ></a>
+                </ng-container>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <p>{{property?.name}}</p>
+                    </h4>
+                    <h4 class="card-title">
+                        <p>Price per night: {{property?.price}}</p>
+                    </h4>
+                    <h4 class="card-title">
+                        <p>Location: {{property?.city.name}}</p>
+                    </h4>
+                    <p class="card-text">{{property?.description | shortDesc}}</p>
+                    <!-- property.reviews may cause mistake WDS (look console)  -->
+                    <p>Average Reviews level: {{property?.averageReviews}}</p>
+                </div>
+            </div></button>
+            <p>
+        </div>
+    </div>
+  </ng-container>
+</div>

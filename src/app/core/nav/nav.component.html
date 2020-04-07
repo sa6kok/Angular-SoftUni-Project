@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" ngbNav >
+      <a class="navbar-brand" routerLink=''>Home</a>
+      <a class="navbar-brand" routerLink='home/admin' sec:authorize="hasRole('ROLE_ADMIN')">Home Admin</a>
+      <a class="navbar-brand" routerLink='home/guest' sec:authorize="hasRole('ROLE_GUEST')">Home</a>
+      <a class="navbar-brand" routerLink='property/show/my' sec:authorize="hasRole('ROLE_HOST')">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#navbarResponsive" aria-controls="navbarResponsive"
+              aria-label="Toggle navigation"
+              (click)="isNavbarCollapsed = !isNavbarCollapsed" >
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
+          <ul class="navbar-nav mr-auto" >
+              <li class="nav-item">
+                  <a class="nav-link" routerLink='property/search'>Search Location</a>
+              </li>
+              <li class="nav-item" sec:authorize="!isFullyAuthenticated()">
+                  <a class="nav-link" routerLink='user/login'>Login</a>
+              </li>
+              <li class="nav-item dropdown" ngbDropdown>
+                  <a class="nav-link dropdown-toggle" id="dropdown04" ngbDropdownToggle>
+                      Register
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdown04" ngbDropdownMenu>
+                      <a class="dropdown-item" routerLink='user/register/guest'>Register as Guest</a>
+                      <a class="dropdown-item" routerLink='user/register/host'>Register as Host</a>
+                  </div>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_HOST')">
+                  <a class="nav-link" routerLink='property/create'>Property Create</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_HOST')">
+                  <a class="nav-link" routerLink='property/show/my'>My properties</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_HOST')">
+                  <a class="nav-link" routerLink='reservation/reservations/properties'>My properties reservations</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_HOST') || hasRole('ROLE_GUEST')">
+                  <a class="nav-link" routerLink='property/show/all'>All Properties</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_GUEST')">
+                  <a class="nav-link" routerLink='reservation/create'>Make Reservation</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_GUEST')">
+                  <a class="nav-link" routerLink='reservation/reservations/all'>My Reservations</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_GUEST')">
+                  <a class="nav-link" routerLink='property/show/all'>Top locations</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                  <a class="nav-link" routerLink='reservation/reservations/admin'>All Reservations</a>
+              </li>
+          </ul>
+      </div>
+    </nav>

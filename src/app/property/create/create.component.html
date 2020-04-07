@@ -1,0 +1,114 @@
+<div class="row">
+  <ng-container class="col-lg-10 col-xl-9 mx-auto">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <ng-container>
+              <div class="card card-signin flex-row my-5">
+                  <div class="card-body">
+                      <h5 class="card-title text-center" >Create property</h5>
+                      <form class="form-signin" ngForm #createPropertyForm="ngForm" (ngSubmit)="onSubmit(createPropertyForm)"  >
+                          <div class="form-label-group">
+                              <input type="text"  id="inputPropertyName" class="form-control" name="name" placeholder="Property name"
+                              ngModel #name="ngModel" required minlength="6" >
+                              <p class="error-message" *ngIf="name.touched && name.invalid">Property name must be at least 6 characters!</p>
+                              <label *ngIf="!name.touched || name.valid" for="inputPropertyName">Property name</label>
+                          </div>
+
+                          <div class="form-label-group">
+                              <input type="text" id="inputDescription" class="form-control" name="description" placeholder="Description"
+                                      ngModel #description="ngModel" required minlength="20">
+                              <p class="error-message" *ngIf="description.touched && description.invalid">Description must be at least 20 characters!</p>
+                              <label *ngIf="!description.touched || description.valid"  for="inputDescription">Description</label>
+                          </div>
+
+                          <div class="form-label-group">
+                              <input type="number" step="0.1"  min="0" id="inputPrice" class="form-control" name="price" placeholder="Price per night"
+                                      ngModel #price="ngModel" appPositiveNumber required >
+                              <p class="error-message" *ngIf="price.touched && price.invalid">Price should be a positive number</p>
+                              <label *ngIf="!price.touched || price.valid"  for="inputPrice">Price per night</label>
+                          </div>
+
+                          <div class="form-label-group">
+                              <input type="text" id="inputPictureUrl" class="form-control" name="pictureUrl" placeholder="Picture URL"
+                                     ngModel #pictureUrl="ngModel" required pattern="^http.+$">
+                              <p class="error-message" *ngIf="pictureUrl.touched && pictureUrl.invalid">The URL from the picture should start with "http..."</p>
+                              <label *ngIf="!pictureUrl.touched || pictureUrl.valid" for="inputPictureUrl">Picture URL</label>
+                          </div>
+
+                          <div class="form-label-group">
+                            <select class="browser-default custom-select" id="selectCountryCreate" name="country"
+                             (change)="setCities(createPropertyForm.value.country)" ngModel required #optionCountry="ngModel">
+                                <option  value="">Select Country</option>
+                                <option *ngFor="let country of (countries$ | async)" [ngValue]="country?.name">
+                                  {{country?.name}}
+                                </option>
+                            </select>
+                            <label for="selectCountryCreate">Country</label>
+                            <label class="col-md-7 control-label error-message" *ngIf="optionCountry.touched && optionCountry.dirty && (cities?.length === 0 || cities === undefined)"
+                            >No Cities.</label>
+                        </div>
+
+                          <div class="form-label-group">
+                              <select class="browser-default custom-select" id="selectCityCreate" name="city" ngModel required>
+                                  <option  value="">Select City</option>
+                                  <option *ngFor="let city of cities" [ngValue]="city?.name">
+                                    {{city?.name}}
+                                  </option>
+                              </select>
+                              <label for="selectCityCreate">City</label>
+                          </div>
+                          <div class="form-label-group">
+                              <input type="text" id="inputStreet" class="form-control" name="street" placeholder="Street"
+                                     ngModel #street="ngModel" required minlength="4">
+                              <p class="error-message" *ngIf="street.touched && street.invalid">The street should be at least 4 characters</p>
+                              <label *ngIf="!street.touched || street.valid" for="inputStreet">Street</label>
+                          </div>
+
+                          <div class="form-label-group">
+                              <input type="number" id="inputStreetNumber" class="form-control" name="streetNumber" placeholder="Street Number"
+                                   ngModel #streetNumber="ngModel"   required appPositiveNumber >
+                              <p class="error-message" *ngIf="streetNumber.touched && streetNumber.invalid">The street number should be a positive number</p>
+                              <label *ngIf="!streetNumber.touched || streetNumber.valid" for="inputStreetNumber">Street Number</label>
+                          </div>
+
+                          <div class="form-label-group" >
+                              <input type="text" id="inputsStreetNumberAddition" class="form-control" name="streetNumberAddition" placeholder="Street Number Addition"
+                                      ngModel #streetNumberAddition="ngModel">
+                                     <p class="error-message" *ngIf="streetNumberAddition.touched && streetNumberAddition.invalid">Street number addition should not be empty</p>
+                              <label *ngIf="!streetNumberAddition.touched || streetNumberAddition.valid" for="inputsStreetNumberAddition">Street Number Addition (Optional)</label>
+                          </div>
+
+                          <div class="form-label-group">
+                              <input type="number"  id="inputFloor" class="form-control" name="floor" placeholder="Floor"
+                                      ngModel #floor="ngModel" required appPositiveNumber>
+                              <p class="error-message" *ngIf="floor.touched && floor.invalid">Floor should be a positive number</p>
+                              <label *ngIf="!floor.touched || floor.valid" for="inputFloor">Floor</label>
+                          </div>
+
+                          <div class="form-label-group">
+                              <input type="number" id="inputApartment" class="form-control" name="apartment" placeholder="Apartment number"
+                                     ngModel #apartment="ngModel" required appPositiveNumber>
+                              <p class="error-message" *ngIf="apartment.touched && apartment.invalid">Apartment should be a positive number</p>
+                              <label *ngIf="!apartment.touched || apartment.valid" for="inputApartment">Apartment number</label>
+                          </div>
+
+                          <div class="form-label-group">
+                              <input type="number"  id="inputMaxOccupancy" class="form-control" name="maxOccupancy" placeholder="Max Occupancy"
+                                      ngModel #maxOccupancy="ngModel" required appPositiveNumber >
+                              <p class="error-message" *ngIf="maxOccupancy.touched && maxOccupancy.invalid">Max Occupancy should be a positive number</p>
+                              <label *ngIf="!maxOccupancy.touched || maxOccupancy.valid" for="inputMaxOccupancy">Max Occupancy</label>
+                          </div>
+
+                          <button class="btn btn-lg btn-dark btn-block text-uppercase" [disabled]="createPropertyForm.invalid || cities?.length == 0">Create
+                              Property
+                          </button>
+                          <hr class="my-4">
+                      </form>
+                  </div>
+              </div>
+          </ng-container>
+        </div>
+
+    </ng-container>
+</div>
+
+

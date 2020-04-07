@@ -1,0 +1,100 @@
+<hr>
+<div class="align-items-center">
+    <h2 class="text-center" th:text="${message}"></h2>
+    <div class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
+        <h2 class="text-center" >Property Details</h2>
+        <div class="carousel-inner" role="listbox">
+            <div class="col-md-3 mb-3" *ngFor="let picture of property?.pictures">
+                <img class="img-fluid"
+                     [src]="picture">
+            </div>
+        </div>
+    </div>
+
+        <div class="form-label-group">
+            <div class="form-label-group">
+                <input type="text"  class="form-control" name="country"
+                       [value]="property?.city?.country?.name" readonly
+                       required>
+            </div>
+            <label for="selectedCountry">Country </label>
+        </div>
+        <div class="form-label-group">
+            <div class="form-label-group">
+                <input type="text"  class="form-control" name="city"
+                       [value]="property?.city?.name" readonly required>
+            </div>
+            <label for="selectedCity">City </label>
+        </div>
+        <div class="form-label-group">
+            <div class="form-label-group">
+                <input type="text"  class="form-control"
+                       name="propertyName"
+                       [value]="property?.name" readonly required>
+            </div>
+            <label for="selectedPropertyName">Property name </label>
+        </div>
+        <div class="form-label-group">
+            <div class="form-label-group">
+                        <textarea type="text"  rows="5" class="form-control"
+                                  name="description"
+                                  [value]="property?.description" readonly required>{{property?.description}}</textarea>
+            </div>
+            <label for="selectedPropertyDescription">Description </label>
+        </div>
+        <div class="form-label-group">
+            <div class="form-label-group">
+                <input type="text"  class="form-control"
+                       name="maxOccupancy"
+                       [value]="property?.maxOccupancy" readonly required>
+            </div>
+            <label for="selectedPropertyOccupancy">Max Occupancy </label>
+        </div>
+        <div class="form-label-group">
+            <div class="form-label-group">
+                        <textarea type="text" class="form-control" name="fullStreet"
+                                  [value]="property?.fullStreet" readonly required>{{property?.fullStreet}}</textarea>
+            </div>
+            <label for="selectedPropertyFullStreet">Address </label>
+        </div>
+        <div class="form-label-group">
+            <div class="form-label-group">
+                <input type="text" class="form-control" name="price"
+                       [value]="property?.price" readonly required>
+            </div>
+            <label for="selectedPropertyPrice">Price per night </label>
+        </div>
+        <ng-container *ngIf="property?.reviews?.length !== 0" >
+            <p  class="btn btn-lg btn-light btn-block text-uppercase"
+                    (click)="showReviews()" (submit)=false>Show Reviews
+        </p>
+            <label for="btnReviewShow">Click to see all reviews</label>
+        <ng-container *ngIf="seeReviews">
+            <div class="card-body" >
+                <div class="form-label-group">
+                    <div class="card card-signin my-5"
+                         *ngFor="let review of property?.reviews">
+                        <div class="form-label-group">
+                            <p class="text-center">
+                               Review level: {{review?.level}}"</p>
+                            <p class="text-center">Description</p>
+                            <textarea type="text"  class="form-control" rows="3"
+                                      name="reviewDescription"
+                                       readonly required>{{review?.description}}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        </ng-container>
+        <ng-container *ngIf="property?.reviews?.length === 0">
+            <p class="btn btn-lg btn-light btn-block text-uppercase">No reviews for the property</p>
+        </ng-container>
+        <form class="form-signin" th:if="${isOwner}"
+              th:action="@{/property/add/picture/{id}(id=*{property.getId()})}" th:method="get">
+            <input type="text"  class="form-control" name="pictureUrl"
+                   placeholder="Paste a Picture URL" required>
+            <label for="picture">Paste a picture URL to add picture</label>
+            <button  class="btn btn-lg btn-light btn-block text-uppercase">Add Picture</button>
+        </form>
+</div>

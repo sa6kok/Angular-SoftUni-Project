@@ -1,0 +1,65 @@
+<div class="row">
+  <ng-container>
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-7 align-items-center">
+        <div class="card-body">
+          <legend>Pick a Country and/or a City</legend>
+          <form #searchForm="ngForm" ngForm (ngSubmit)="onSubmit(searchForm)">
+            <div class="form-label-group">
+              <select
+                class="browser-default custom-select"
+                id="selectCountry1"
+                name="country"
+                ngModel
+                #optionCountry="ngModel"
+                (change)="setCities(searchForm.value.country.name)"
+                required>
+                <option value="">Select Country</option>
+                <option *ngFor="let country of countries$ | async" [ngValue]="country">
+                  {{ country.name }}</option
+                  >
+              </select>
+              <label class="col-md-7 control-label error-message" *ngIf="optionCountry.dirty && (cities?.length === 0 || cities === undefined)"
+                 >No Cities.</label>
+              <label *ngIf="!optionCountry.dirty || cities?.length > 0" for="selectCountry1" class="col-md-7 control-label"
+                >Select Country</label
+              >
+            </div>
+            <div class="form-label-group">
+              <select
+                class="browser-default custom-select"
+                id="selectCity1"
+                name="city"
+                ngModel
+                #optionCity="ngModel"
+                (change)="checkIfProperties(searchForm.value.city.name)"
+                required
+              >
+                <option value="">Select City</option>
+                <option *ngFor="let city of cities" [ngValue]="city"
+                  >{{ city.name }}
+                </option>
+              </select>
+              <p for="selectCity1" *ngIf="!hasNoProperties" class="col-md-5 control-label"
+                >Select City</p
+              >
+              <p for="selectCity1" class="error-message" *ngIf="hasNoProperties">No Properties. Change your search!</p>
+            </div>
+            <button *ngIf="!optionCity.value"
+              class="btn btn-lg btn-dark btn-block text-uppercase"
+              [disabled]="!optionCountry.valid || (optionCountry.dirty && (cities?.length === 0 || cities === undefined))"
+            >
+              Search in the entire country
+            </button>
+            <button *ngIf="!!optionCity.value"
+              class="btn btn-lg btn-dark btn-block text-uppercase"
+              [disabled]="searchForm.invalid || hasNoProperties"
+            >
+              Search in the particular city
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

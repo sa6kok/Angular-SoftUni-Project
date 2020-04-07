@@ -1,0 +1,10 @@
+<footer class="py-3 bg-dark">
+  <div class="container">
+      <div class="text-center text-white"sec:authorize="isAuthenticated()">
+          <h3 sec:authentication="name"></h3>
+         <h3><a class="text-center text-white" routerLink='user/logout'>Logout</a></h3>
+      </div>
+      <div class="m-0 text-center text-white">{{today | date:'dd/MMM/yyyy HH:mm'}}</div>
+      <p class="m-0 text-center text-white">Copyright &copy; ALEKS</p>
+  </div>
+</footer>

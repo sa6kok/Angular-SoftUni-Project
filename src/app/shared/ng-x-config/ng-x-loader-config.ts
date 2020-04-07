@@ -1,0 +1,32 @@
+import { NgxUiLoaderConfig } from 'ngx-ui-loader';
+
+export const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: '#292828',
+  bgsOpacity: 0.5,
+  bgsPosition: 'bottom-right',
+  bgsSize: 60,
+  bgsType: 'fading-circle',
+  blur: 0,
+  delay: 100,
+  fastFadeOut: true,
+  fgsColor: '#292828',
+  fgsPosition: 'center-center',
+  fgsSize: 70,
+  fgsType: 'fading-circle',
+  gap: 24,
+  logoPosition: 'center-center',
+  logoSize: 100,
+  logoUrl: 'favicon.ico',
+  masterLoaderId: 'master',
+  overlayBorderRadius: '0',
+  overlayColor: 'rgba(117,116,116,0.8)',
+  pbColor: '#292828',
+  pbDirection: 'ltr',
+  pbThickness: 3,
+  hasProgressBar: true,
+  text: '',
+  textColor: '#FFFFFF',
+  textPosition: 'center-center',
+  maxTime: -1,
+  minTime: 100
+};

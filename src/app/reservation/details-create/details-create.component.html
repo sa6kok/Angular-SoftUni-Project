@@ -1,0 +1,85 @@
+<div id="multi-item-example" class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
+  <div class="carousel-inner" role="listbox">
+      <div class="col-md-3 mb-3" *ngFor="let picture of reservation?.property.pictures">
+          <div class="card">
+              <img class="img-fluid"
+                   [src]="picture"
+                   alt="Card image cap">
+          </div>
+      </div>
+  </div>
+</div>
+<div class="col-sm-7 col-md-8 col-lg-6 mx-auto">
+  <div class="card card-signin my-5">
+      <div class="card-body">
+          <h2 class="text-center">Reservation details</h2>
+          <form id="reservationForm" class="form-horizontal" ngForm #resaForm="ngForm" (ngSubmit)="onSubmit(resaForm)">
+              <!--   th:action="@{/reservation/details/{id}(id=${model.getPropertyViewModel().getId()})}" -->
+              <fieldset>
+                 <app-details-property [selectedProperty]="currentProperty"></app-details-property>
+                 <ng-container *ngIf="!reservationDetails">
+                  <h5 class="card-title">Reservation dates:</h5>
+                  <app-ngbd-datepicker-range (selectCheckIn)="selectCheckIn($event)" (selectCheckOut)=selectCheckOut($event)></app-ngbd-datepicker-range>
+                  <hr>
+                  <ng-container *ngIf="busyDates?.length > 1">
+                    <label class=" control-label text-danger">
+                           On the following dates: {{busyDates}} is the property not available. Please pick different dates! </label>
+                </ng-container>
+                  <div class="form-group">
+                      <div class="input-group date form_date col-md-5" id="startDateResa" data-date="">
+                          <input id="startDatePickInputResa" class="form-control" type="text" name="startDate"
+                                  [value]="checkIn | dateShow" required readonly>
+                      </div>
+                      <label for="dtp_inputCheckInResa" class="col-md-3 control-label">Check-In</label>
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group date form_date col-md-5" id="endDate" data-date="">
+                          <input id="endDatePickInputResa"  class="form-control" size="16" type="text" name="endDate"
+                                  [value]="checkOut | dateShow"  required readonly >
+                      </div>
+                      <label for="dtp_inputCheckOutResa" class="col-md-3 control-label">Check-Out</label>
+                  </div>
+                  <ng-container *ngIf="busyDates?.length > 1">
+                    <label for="btnPayLAter" class=" control-label text-danger">
+                           On the following dates: {{busyDates}} is the property not available. Please pick different dates!</label>
+                  </ng-container>
+                  <div class="form-label-group">
+                      <div class="form-label-group col-md-5">
+                          <input type="number" id="occupancyInput" class="form-control"
+                                 ngModel #occupancy="ngModel" name="occupancy"
+                                 required appPositiveNumber (change)="checkOccupancy(occupancy.value)">
+                      </div>
+                      <label *ngIf="!isOccupancyOk"  for="occupancyInput" class="col-md">Person <label *ngIf="occupancy.invalid && occupancy.touched" > should be a positive nimber!</label></label>
+                      <label *ngIf="isOccupancyOk" class="error-message col-md" >Occupancy is higher than max occupancy!</label>
+
+                  </div>
+                  <div class="form-label-group">
+                      <div class="form-label-group col-md-5">
+                          <input type="text" id="totalAmount" class="form-control" name="totalPrice"
+                                 [value]="totalAmount | showCorectNumber"  readonly required>
+                      </div>
+                      <label for="totalAmount" class="col-md-3 control-label">Total Price </label>
+                  </div>
+                 </ng-container>
+                 <ng-container *ngIf="reservationDetails">
+                  <h5 class="card-title">Reservation dates:</h5>
+                  <p>Check-In date: {{reservationDetails.startDate}}</p>
+                  <p>Check-Out date: {{reservationDetails.endDate}}</p>
+                  <p>Pax: {{reservationDetails.occupancy}}</p>
+                  <p class="text-uppercase">Total price: {{totalAmount}}</p>
+                 </ng-container>
+                  <div class="custom-control custom-checkbox mb-3">
+                      <input ngModel #checkPayment="ngModel" (change)="setToPay(checkPayment.value)" type="checkbox" class="custom-control-input" id="checkPayment" name="checkPayment">
+                      <label class="custom-control-label" for="checkPayment">Pay now (if You don't pay now You
+                          need to pay until the end of the next day)</label>
+                  </div>
+                  <button *ngIf="toPay" id="btnPay" class="btn btn-lg btn-dark btn-block text-uppercase confirmation"
+                          [disabled]="reservationDetails ? false : resaForm.invalid || isOccupancyOk || busyDates !== null">RESERVE AND PAY NOW</button>
+                  <button *ngIf="!toPay || toPay == null" id="btnPayLater" class="btn btn-lg btn-dark btn-block text-uppercase confirmation"
+                          [disabled]="reservationDetails ? false : resaForm.invalid || isOccupancyOk || busyDates !== null">RESERVE AND PAY LATER</button>
+              </fieldset>
+          </form>
+          {{resaForm.value | json}}
+      </div>
+  </div>
+</div>
