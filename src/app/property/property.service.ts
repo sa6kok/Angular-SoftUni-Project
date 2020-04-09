@@ -39,6 +39,11 @@ export class PropertyService {
     return this.http.get<IProperty[]>(`reservation/create/${city}/${startDate}/${endDate}/${occupancy}`);
   }
 
+  loadMyProperties(): Observable<IProperty[]> {
+    return this.http.get<IProperty[]>('property/my');
+  }
+
+
   saveProperty(property: IPropertyCreate): Observable<boolean> {
     const httpOptions = {
       headers: new HttpHeaders({

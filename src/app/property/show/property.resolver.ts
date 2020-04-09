@@ -18,6 +18,9 @@ export class PropertyResolver implements Resolve<IProperty[]> {
     const checkIn = route.paramMap.get('start');
     const chaeckOut = route.paramMap.get('end');
     const pax = route.paramMap.get('occupancy');
+    if (country === 'my') {
+      return this.service.loadMyProperties();
+    }
     if (checkIn === null) {
     return this.service.loadPropertiesWhithoutDates(country, city);
     } else {

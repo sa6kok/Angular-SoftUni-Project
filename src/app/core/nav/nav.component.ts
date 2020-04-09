@@ -1,17 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
+import { TokenStorageService } from 'src/app/shared/token-storage.service';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
 
   isNavbarCollapsed = true;
 
-  constructor() { }
+  constructor(private tokenService: TokenStorageService) { }
 
-  ngOnInit(): void {
+  get isLoggedIn() {
+    return this.tokenService.isLoggedIn;
   }
 
+  get roles(): string[] {
+    return this.tokenService.roles;
+  }
 }

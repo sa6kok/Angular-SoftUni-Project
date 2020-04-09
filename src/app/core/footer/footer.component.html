@@ -1,10 +1,12 @@
 <footer class="py-3 bg-dark">
-  <div class="container">
-      <div class="text-center text-white"sec:authorize="isAuthenticated()">
-          <h3 sec:authentication="name"></h3>
-         <h3><a class="text-center text-white" routerLink='user/logout'>Logout</a></h3>
+      <h4 *ngIf="isLoggedIn" class="text-center text-white">
+          Welcome, {{username | titlecase}}!
+      </h4>
+      <div *ngIf="isLoggedIn" class="text-center text-white">
+         <!--  <h3 sec:authentication="name"></h3> -->
+         <button class="btn text-uppercase btn-light" (click)="logOut()">Logout</button>
       </div>
       <div class="m-0 text-center text-white">{{today | date:'dd/MMM/yyyy HH:mm'}}</div>
       <p class="m-0 text-center text-white">Copyright &copy; ALEKS</p>
-  </div>
+
 </footer>
