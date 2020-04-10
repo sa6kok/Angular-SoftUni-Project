@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IUserCreate } from './interfaces/user-register';
 import { Observable } from 'rxjs';
 import { IUserLogin } from './interfaces/user-login';
+import { IUser } from '../home/interfaces/user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,5 +31,9 @@ export class UserService {
 
   login(user: IUserLogin): Observable<any> {
     return this.http.post('user/login', user, httpOptions);
+  }
+
+  getAllUsers(): Observable<IUser[]> {
+    return this.http.get<IUser[]>('admin/users');
   }
 }

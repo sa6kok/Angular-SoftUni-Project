@@ -32,10 +32,13 @@ export class ShowComponent implements OnInit {
 
   }
 
-  sendProperty(property: IProperty) {
-    this.router.navigateByUrl('/reservation/create/details',
-    { state: { property,
-       reservationDetails: this.reservationDetails } });
+  sendProperty(propertyId: string) {
+    this.router.navigateByUrl(`/reservation/create/details/${propertyId}`,
+    {
+      state: {
+        reservationDetails: this.reservationDetails
+      }
+    });
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import { TokenStorageService } from 'src/app/shared/token-storage.service';
+import { TokenStorageService } from 'src/app/shared/services/token-storage.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,13 +11,13 @@ export class NavComponent {
 
   isNavbarCollapsed = true;
 
-  constructor(private tokenService: TokenStorageService) { }
+  constructor(private authService: AuthService) { }
 
   get isLoggedIn() {
-    return this.tokenService.isLoggedIn;
+    return this.authService.isLoggedIn;
   }
 
   get roles(): string[] {
-    return this.tokenService.roles;
+    return this.authService.roles;
   }
 }

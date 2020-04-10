@@ -6,5 +6,5 @@ export interface IUser {
   lastName: string;
   age: number;
   roles: string[];
-  isActive: boolean;
+  active: boolean;
 }

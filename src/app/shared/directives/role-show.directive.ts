@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { TokenStorageService } from '../token-storage.service';
+import { TokenStorageService } from '../services/token-storage.service';
 import { NG_VALIDATORS } from '@angular/forms';
 
 @Directive({

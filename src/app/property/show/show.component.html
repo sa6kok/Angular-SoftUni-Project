@@ -7,7 +7,7 @@
     <ng-container *ngIf="properties">
     <div class="row" >
         <div class="col-lg-4 col-sm-6 portfolio-item" *ngFor="let property of properties">
-           <button (click)="sendProperty(property)"><div class="card h-100">
+           <button (click)="sendProperty(property.id)"><div class="card h-100">
                 <ng-container>
                         <img class="card-img-top" [src]="property.firstPicture"
                              th:alt="property.name" sec:authorize="hasRole('ROLE_GUEST')">

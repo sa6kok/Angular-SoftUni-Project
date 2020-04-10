@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IUserLogin } from '../interfaces/user-login';
 import { UserService } from '../user.service';
-import { Router } from '@angular/router';
-import { TokenStorageService } from 'src/app/shared/token-storage.service';
-import { NavComponent } from 'src/app/core/nav/nav.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import {Location} from '@angular/common';
+import { redirectHome } from 'src/app/shared/functions/home-redirect';
 
 @Component({
   selector: 'app-login',
@@ -17,15 +18,24 @@ export class LoginComponent implements OnInit {
 
   roles: string[];
 
+  returnUrl: string;
+
   constructor(private service: UserService,
               private router: Router,
-              private tokenStorage: TokenStorageService) { }
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService) {
+    if (this.authService.getUsername()) {
+      this.router.navigate(['']);
+    }
+  }
 
   ngOnInit(): void {
     /*  if (this.tokenStorage.getToken()) {
        this.isLoggedIn = true;
        this.roles = this.tokenStorage.getUser().roles;
      } */
+     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '';
+
   }
 
   onSubmit(form: NgForm) {
@@ -35,17 +45,18 @@ export class LoginComponent implements OnInit {
       data => {
 
         if (data === null) {
-            this.message = 'Ivalid username/password. Please try again';
-            return;
+          this.message = 'Ivalid username/password. Please try again';
+          return;
         }
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUser(data);
-
-
+        this.authService.login(data);
+        if (this.returnUrl !== '') {
+          return this.router.navigate([this.returnUrl]);
+        }
         // this.isLoginFailed = false;
         // this.isLoggedIn = true;
         // this.roles = this.tokenStorage.getUser().roles;
-        this.router.navigate(['/home/guest']);
+
+        redirectHome(data.roles, this.router);
       },
       err => {
         this.message = err?.error?.message;

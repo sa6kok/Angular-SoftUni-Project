@@ -39,24 +39,23 @@ export class DetailsCreateComponent implements OnInit {
   constructor(private location: Location,
               private service: ReservationService,
               private router: Router) {
+
+  }
+  ngOnInit(): void {
+    // tslint:disable-next-line: no-string-literal
+    this.reservationDetails = this.location.getState()['reservationDetails'];
+    this.setTotalAmount();
   }
 
   setTotalAmount() {
     if (this.reservationDetails) {
       this.totalAmount =
-       calculateStayFromStringDates(this.reservationDetails.startDate, this.reservationDetails.endDate) * this.currentProperty.price ;
+        calculateStayFromStringDates(this.reservationDetails.startDate, this.reservationDetails.endDate) * this.currentProperty?.price;
     } else {
       this.totalAmount =
-      calculateStayFromStringDates(
-        dateShowPipe(this.checkIn) , dateShowPipe( this.checkOut)) * this.currentProperty?.price ;
+        calculateStayFromStringDates(
+          dateShowPipe(this.checkIn), dateShowPipe(this.checkOut)) * this.currentProperty?.price;
     }
-  }
-
-  ngOnInit(): void {
-    // tslint:disable: no-string-literal
-    this.currentProperty = this.location.getState()['property'];
-    this.reservationDetails = this.location.getState()['reservationDetails'];
-    this.setTotalAmount();
   }
 
   setToPay(checkPayment: boolean) {
@@ -77,31 +76,31 @@ export class DetailsCreateComponent implements OnInit {
 
   checkOccupancy(occupancy: string) {
     if (!occupancy) {
-        this.isOccupancyOk =  false;
+      this.isOccupancyOk = false;
     } else {
-    const max = this.currentProperty?.maxOccupancy;
-    const current = Number(occupancy);
-    this.isOccupancyOk = (current > max);
+      const max = this.currentProperty?.maxOccupancy;
+      const current = Number(occupancy);
+      this.isOccupancyOk = (current > max);
     }
   }
 
   checkBusyDates() {
     this.service.checkBusyDates(this.currentProperty.id, dateShowPipe(this.checkIn), dateShowPipe(this.checkOut))
-    .subscribe(resp => {
-      if (resp === '') {
-        this.busyDates = null;
-      } else {
-      this.busyDates = resp;
-      }
-    });
+      .subscribe(resp => {
+        if (resp === '') {
+          this.busyDates = null;
+        } else {
+          this.busyDates = resp;
+        }
+      });
   }
 
   onSubmit(form: NgForm) {
     this.service.saveReservation(form.value, this.currentProperty, this.reservationDetails, this.checkIn, this.checkOut, this.totalAmount)
-    .subscribe(resp => {
-      if (resp) {
-        this.router.navigate(['reservation/reservations/all']);
-      }
-    });
+      .subscribe(resp => {
+        if (resp) {
+          this.router.navigate(['reservation/reservations/all']);
+        }
+      });
   }
 }

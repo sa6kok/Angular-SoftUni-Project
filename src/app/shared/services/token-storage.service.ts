@@ -9,18 +9,9 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
 
-  isLoggedIn: boolean;
-
-  roles: string[];
-
-  constructor() {
-    this.isLoggedIn = !!sessionStorage.getItem(TOKEN_KEY);
-   }
-
+  constructor() {}
 
   logOut() {
-    this.isLoggedIn = false;
-    this.roles = null;
     window.sessionStorage.clear();
   }
 
@@ -36,8 +27,6 @@ export class TokenStorageService {
   public saveUser(user) {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
-    this.isLoggedIn = true;
-    this.roles = this.getUser().roles;
   }
 
   public getUser() {

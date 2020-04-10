@@ -12,7 +12,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'error',
+    path: 'error/:error',
     component: NotFoundComponent
   },
   {

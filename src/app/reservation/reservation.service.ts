@@ -24,6 +24,10 @@ export class ReservationService {
     this.http.get(``);
   }
 
+  getProperty(propertyId: string): Observable<IProperty> {
+   return this.http.get<IProperty>(`property/details/${propertyId}`);
+  }
+
 
   checkBusyDates(propertyId: string, checkIn: string, checkOut: string): Observable<string> {
     return this.http.get<string>(`reservation/check/${propertyId}/${checkIn}/${checkOut}`);

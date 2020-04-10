@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { TokenStorageService } from 'src/app/shared/token-storage.service';
+import { TokenStorageService } from 'src/app/shared/services/token-storage.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -13,21 +14,21 @@ export class FooterComponent implements OnInit {
 
   today = new Date();
 
-  constructor(private tokenStorage: TokenStorageService,
+  constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit(): void {}
 
   get isLoggedIn() {
-    return this.tokenStorage.isLoggedIn;
+    return this.authService.isLoggedIn;
   }
 
   get username() {
-    return this.tokenStorage.getUser()['username'];
+    return this.authService.getUsername();
   }
 
   logOut() {
-      this.tokenStorage.logOut();
+      this.authService.logout();
       this.router.navigate(['/home']);
   }
 

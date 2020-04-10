@@ -5,14 +5,14 @@
     <a routerLink='/property/search'> search </a>for incredible locations all
     over Europe.
   </h1>
-  <h2 class="my-4">
+  <h2 class="my-4" *ngIf="!isLogged">
     In order to reserve You should <a routerLink='/user/login'>Log In.</a>
   </h2>
-  <h2 class="my-4">
+  <h2 class="my-4" *ngIf="!isLogged">
     Don't have an account
     <a routerLink='/user/register/guest'>Register here.</a>
   </h2>
-  <h2 class="my-4">
+  <h2 class="my-4" *ngIf="!isLogged">
     You want to offer Your location
     <a routerLink='/user/register/host'>Register here.</a>
   </h2>

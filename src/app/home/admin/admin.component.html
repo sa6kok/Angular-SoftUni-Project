@@ -20,8 +20,8 @@
             <td>{{user?.lastName}}</td>
             <td>{{user?.age}}</td>
             <td>{{user?.roles[0]}}</td>
-            <td *ngIf="user?.isActive">User is Active <a routerLink='admin/status/${user.getId()'>Deactivate user</a></td>
-            <td *ngIf="!user?.isActive" >User is Not Active <a routerLink="|/admin/status/${user.getId()}|" >Activate</a></td>
+            <td *ngIf="user?.active">User is Active <button (click)="changeStatus(user?.id)">Deactivate user</button></td>
+            <td *ngIf="!user?.active" >User is Not Active <button (click)="changeStatus(user?.id)" >Activate</button></td>
         </tr>
         </tbody>
 </table>

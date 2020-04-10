@@ -16,7 +16,8 @@ import { ShowCorectNumberPipe } from './shared/pipes/show-corect-number.pipe';
 
 
 @NgModule({
-  declarations: [CreateComponent, NgbdDatepickerRangeComponent, DateShowPipe, DetailsReservation, DetailsComponent, DateShowDbPipe, ShowCorectNumberPipe],
+  declarations: [CreateComponent, NgbdDatepickerRangeComponent, DateShowPipe,
+    DetailsReservation, DetailsComponent, DateShowDbPipe, ShowCorectNumberPipe],
   imports: [
     CommonModule,
     NgbModule,

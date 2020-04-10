@@ -4,12 +4,14 @@ import { CreateComponent } from './create/create.component';
 import { DetailsComponent } from './details/details.component';
 import { ReservationResolver } from './details/reservation-details.resolver';
 import { DetailsCreateComponent } from './details-create/details-create.component';
+import { AuthGuard } from '../guards/auth.guard';
 const routes: Routes = [
     {
       path: 'reservation',
     children: [
       {path: 'create', component: CreateComponent},
-      {path: 'create/details', component: DetailsCreateComponent},
+      {path: 'create/details/:id', component: DetailsCreateComponent, canActivate: [AuthGuard],
+      data: { roles: ['ROLE_GUEST', 'ROLE_HOST'] }},
       {path: 'reservations/:filter', resolve: {reservationList: ReservationResolver},  component: DetailsComponent},
     ]},
 ];
