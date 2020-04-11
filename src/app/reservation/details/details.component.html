@@ -12,18 +12,20 @@
                     <a *ngIf="reservation.payed" class="btn btn-lg btn-dark btn-block text-uppercase text-danger ">PAYED</a>
                     <a *ngIf="reservation.canceled"
                        class="btn btn-lg btn-dark btn-block text-uppercase text-danger">CANCELED</a>
+                       <ng-container *ngIf="isOwner(reservation.owner)">
                     <ng-container *ngIf="!reservation.past">
                         <ng-container *ngIf="!reservation.canceled">
-                            <a sec:authorize="hasRole('ROLE_GUEST')" *ngIf="!reservation.payed" th:href="@{/reservation/pay/{id}(id=${reservation.getId()})}"
+
+                            <a *ngIf="!reservation.payed" (click)="payResa(reservation.id)"
                                class="btn btn-lg btn-light btn-block text-uppercase confrmation">RESERVATION is NOT
                                 PAYED PAY NOW</a>
-                        </ng-container>
-                        <a *ngIf="!reservation.canceled" th:href="@{/reservation/cancel/{id}(id=${reservation.getId()})}"
+                        <a *ngIf="!reservation.canceled" (click)="cancelResa(reservation.id)"
                            class="btn btn-lg btn-light btn-block text-uppercase confirmation">CANCEL RESERVATION</a>
                     </ng-container>
                     <ng-container *ngIf="!reservation.canceled">
                         <ng-container *ngIf="reservation.past">
-                            <ng-container *ngIf="!reservation.review" sec:authorize="hasRole('ROLE_GUEST')">
+                            <ng-container *ngIf="!reservation.review" >
+                            <ng-container *appRoleShow = "['ROLE_GUEST']">
                                 <h3 class="text-center">Write a review</h3>
                                 <form th:action="@{/review/create/{id}(id=${reservation.getId()})}"
                                       ngForm #reviewForm="ngForm" (ngSubmit)="onSubmit(reviewForm)">
@@ -53,6 +55,7 @@
                                     </button>
                                 </form>
                             </ng-container>
+                            </ng-container>
                             <ng-container *ngIf="reservation.review">
                                 <h2 class="text-center" >Your Review for the Reservation</h2>
                                 <h3 class="text-center">Review note: {{reservation.review.level}}</h3>
@@ -60,6 +63,8 @@
                             </ng-container>
                         </ng-container>
                     </ng-container>
+                  </ng-container>
+                </ng-container>
                     <app-details-property [selectedProperty]="reservation.property"></app-details-property>
                 </fieldset>
             </div>

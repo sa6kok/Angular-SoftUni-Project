@@ -4,8 +4,15 @@ import { IUserLogin } from '../interfaces/user-login';
 import { UserService } from '../user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import {Location} from '@angular/common';
 import { redirectHome } from 'src/app/shared/functions/home-redirect';
+import { ToastrService } from 'ngx-toastr';
+
+const INVALID_LOGIN = 'Ivalid username/password. Please try again';
+const LOGIN_SUCCESFULL = 'Login succesfull!';
+const LOGIN_NOT_SUCCESFULL = 'Login was not succesfull!';
+const RETURN_URL = 'returnUrl';
+const EMPTY_STRING = '';
+
 
 @Component({
   selector: 'app-login',
@@ -23,19 +30,15 @@ export class LoginComponent implements OnInit {
   constructor(private service: UserService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private toastr: ToastrService) {
     if (this.authService.getUsername()) {
-      this.router.navigate(['']);
+      this.router.navigate([]);
     }
   }
 
   ngOnInit(): void {
-    /*  if (this.tokenStorage.getToken()) {
-       this.isLoggedIn = true;
-       this.roles = this.tokenStorage.getUser().roles;
-     } */
-     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '';
-
+     this.returnUrl = this.activatedRoute.snapshot.queryParams[RETURN_URL] || EMPTY_STRING;
   }
 
   onSubmit(form: NgForm) {
@@ -45,22 +48,19 @@ export class LoginComponent implements OnInit {
       data => {
 
         if (data === null) {
-          this.message = 'Ivalid username/password. Please try again';
+          this.message = INVALID_LOGIN;
+          this.toastr.error(LOGIN_NOT_SUCCESFULL);
           return;
         }
         this.authService.login(data);
-        if (this.returnUrl !== '') {
+        if (this.returnUrl !== EMPTY_STRING) {
           return this.router.navigate([this.returnUrl]);
         }
-        // this.isLoginFailed = false;
-        // this.isLoggedIn = true;
-        // this.roles = this.tokenStorage.getUser().roles;
-
+        this.toastr.success(LOGIN_SUCCESFULL);
         redirectHome(data.roles, this.router);
       },
       err => {
         this.message = err?.error?.message;
-        // this.isLoginFailed = true;
       }
     );
   }

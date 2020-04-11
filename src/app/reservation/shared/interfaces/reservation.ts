@@ -15,4 +15,5 @@ export interface IReservation {
    payed: boolean;
    canceled: boolean;
    past: boolean;
+   owner: string;
 }

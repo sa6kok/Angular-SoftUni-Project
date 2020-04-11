@@ -4,8 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { debounceTime, distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
-import { IUser } from 'src/app/home/interfaces/user';
 import { IUserCreate } from '../interfaces/user-register';
+import { ToastrService } from 'ngx-toastr';
+
+const REGISTER_SUCCESS = 'Registration was succesfull! Please log in!';
+const REGISTER_FAIL = 'Registration was not successfull!';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +29,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private service: UserService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
     this.role = this.activatedRoute.snapshot.params.role;
   }
 
@@ -60,6 +64,9 @@ export class RegisterComponent implements OnInit {
     this.service.register(user).subscribe(resp => {
       if (resp) {
         this.router.navigate(['user/login']);
+        this.toastr.success(REGISTER_SUCCESS);
+      } else {
+        this.toastr.error(REGISTER_FAIL);
       }
     });
   }

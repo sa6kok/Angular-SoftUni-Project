@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IReservation } from '../shared/interfaces/reservation';
 import { Location } from '@angular/common';
@@ -9,6 +9,11 @@ import { dateShowPipe } from '../shared/pipes/date-show';
 import { ReservationService } from '../reservation.service';
 import { Router } from '@angular/router';
 import { calculateStayFromStringDates } from '../shared/functions/calculate-stay';
+import { ToastrService } from 'ngx-toastr';
+
+const RESERVATION_SUCCESS = 'Reservation made successfully!';
+const RESERVATION_FAIL = 'Resevation was not made!';
+const RESA_DETAILS = 'reservationDetails';
 
 
 @Component({
@@ -32,28 +37,34 @@ export class DetailsCreateComponent implements OnInit {
 
   toPay: boolean;
 
-  totalAmount: number;
-
   isOccupancyOk: boolean;
+
+  price: number;
+
 
   constructor(private location: Location,
               private service: ReservationService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
 
   }
+
   ngOnInit(): void {
-    // tslint:disable-next-line: no-string-literal
-    this.reservationDetails = this.location.getState()['reservationDetails'];
-    this.setTotalAmount();
+    this.reservationDetails = this.location.getState()[RESA_DETAILS];
+    if (this.reservationDetails) {
+    }
   }
 
-  setTotalAmount() {
+  selectedPropertyHandler(property: IProperty) {
+    this.currentProperty = property;
+  }
+
+
+  get totalAmount() {
     if (this.reservationDetails) {
-      this.totalAmount =
-        calculateStayFromStringDates(this.reservationDetails.startDate, this.reservationDetails.endDate) * this.currentProperty?.price;
+      return calculateStayFromStringDates(this.reservationDetails.startDate, this.reservationDetails.endDate) * this.currentProperty?.price;
     } else {
-      this.totalAmount =
-        calculateStayFromStringDates(
+     return calculateStayFromStringDates(
           dateShowPipe(this.checkIn), dateShowPipe(this.checkOut)) * this.currentProperty?.price;
     }
   }
@@ -70,7 +81,6 @@ export class DetailsCreateComponent implements OnInit {
     this.checkOut = selectedCheckOut;
     if (selectedCheckOut) {
       this.checkBusyDates();
-      this.setTotalAmount();
     }
   }
 
@@ -85,7 +95,7 @@ export class DetailsCreateComponent implements OnInit {
   }
 
   checkBusyDates() {
-    this.service.checkBusyDates(this.currentProperty.id, dateShowPipe(this.checkIn), dateShowPipe(this.checkOut))
+    this.service.checkBusyDates(this.currentProperty?.id, dateShowPipe(this.checkIn), dateShowPipe(this.checkOut))
       .subscribe(resp => {
         if (resp === '') {
           this.busyDates = null;
@@ -100,6 +110,9 @@ export class DetailsCreateComponent implements OnInit {
       .subscribe(resp => {
         if (resp) {
           this.router.navigate(['reservation/reservations/all']);
+          this.toastr.success(RESERVATION_SUCCESS);
+        } else {
+          this.toastr.error(RESERVATION_FAIL);
         }
       });
   }

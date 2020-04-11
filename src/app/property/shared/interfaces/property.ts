@@ -1,5 +1,4 @@
 import { ICity } from './city';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { IReview } from './review';
 
 export interface IProperty {
@@ -20,4 +19,5 @@ export interface IProperty {
   reviews: IReview[];
   fullStreet: string;
   averageReviews: string;
+  owner: string;
 }

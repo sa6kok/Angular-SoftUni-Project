@@ -15,6 +15,8 @@ export class ReservationService {
 
   constructor(private http: HttpClient) { }
 
+  currentPrice: number;
+
 
   loadReservattions(filter: string) {
     return this.http.get<IReservation[]>(`reservation/reservations/${filter}`);
@@ -68,5 +70,13 @@ export class ReservationService {
     createResa.totalPrice = totalAmount;
 
     return this.http.post('reservation/details/create', createResa);
+  }
+
+  payResa(id: string) {
+    return this.http.get(`reservation/pay/${id}`);
+  }
+
+  cancelResa(id: string) {
+    return this.http.get(`reservation/cancel/${id}`);
   }
 }

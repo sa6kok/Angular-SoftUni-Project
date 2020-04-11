@@ -11,10 +11,13 @@ import { UserModule } from './user/user.module';
 import { PropertyModule } from './property/property.module';
 import { HomeModule } from './home/home.module';
 import { NotFoundComponent } from './core/not-found/not-found.component';
-import { ngxUiLoaderConfig } from './shared/ng-x-config/ng-x-loader-config';
+import { ngxUiLoaderConfig } from './shared/config/ng-x-loader-config';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { AppInterceptor } from './interceptors/app-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { toastrConfig } from './shared/config/toastr-cofig';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,8 @@ import { AppInterceptor } from './interceptors/app-interceptor';
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(toastrConfig),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderRouterModule.forRoot({ showForeground: false }),
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),

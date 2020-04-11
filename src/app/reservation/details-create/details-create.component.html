@@ -16,7 +16,8 @@
           <form id="reservationForm" class="form-horizontal" ngForm #resaForm="ngForm" (ngSubmit)="onSubmit(resaForm)">
               <!--   th:action="@{/reservation/details/{id}(id=${model.getPropertyViewModel().getId()})}" -->
               <fieldset>
-                 <app-details-property [selectedProperty]="currentProperty"></app-details-property>
+                 <app-details-property [selectedProperty]="currentProperty" (currentPropertyChild)="selectedPropertyHandler($event)"></app-details-property>
+                 <ng-container *appRoleShow="['ROLE_GUEST']">
                  <ng-container *ngIf="!reservationDetails">
                   <h5 class="card-title">Reservation dates:</h5>
                   <app-ngbd-datepicker-range (selectCheckIn)="selectCheckIn($event)" (selectCheckOut)=selectCheckOut($event)></app-ngbd-datepicker-range>
@@ -53,7 +54,7 @@
                       <label *ngIf="isOccupancyOk" class="error-message col-md" >Occupancy is higher than max occupancy!</label>
 
                   </div>
-                  <div class="form-label-group">
+                  <div class="form-label-group" *ngIf="currentProperty">
                       <div class="form-label-group col-md-5">
                           <input type="text" id="totalAmount" class="form-control" name="totalPrice"
                                  [value]="totalAmount | showCorectNumber"  readonly required>
@@ -77,9 +78,9 @@
                           [disabled]="reservationDetails ? false : resaForm.invalid || isOccupancyOk || busyDates !== null">RESERVE AND PAY NOW</button>
                   <button *ngIf="!toPay || toPay == null" id="btnPayLater" class="btn btn-lg btn-dark btn-block text-uppercase confirmation"
                           [disabled]="reservationDetails ? false : resaForm.invalid || isOccupancyOk || busyDates !== null">RESERVE AND PAY LATER</button>
-              </fieldset>
+                        </ng-container>
+                        </fieldset>
           </form>
-          {{resaForm.value | json}}
       </div>
   </div>
 </div>

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TokenStorageService } from './token-storage.service';
+import { ToastrService } from 'ngx-toastr';
+
+const LOGOUT_SUCESS = 'You just logged out!';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,8 @@ export class AuthService {
   roles: string[];
 
 
-  constructor(private tokenStorage: TokenStorageService) {
+  constructor(private tokenStorage: TokenStorageService,
+              private toastr: ToastrService) {
     this.isLoggedIn = !!tokenStorage.getToken();
   }
 
@@ -19,6 +23,7 @@ export class AuthService {
     this.isLoggedIn = false;
     this.roles = null;
     this.tokenStorage.logOut();
+    this.toastr.success(LOGOUT_SUCESS);
   }
 
   login(data: any) {

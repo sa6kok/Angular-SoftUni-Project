@@ -36,4 +36,9 @@ export class UserService {
   getAllUsers(): Observable<IUser[]> {
     return this.http.get<IUser[]>('admin/users');
   }
+
+  changeStatus(userId: string) {
+    return this.http.get(`admin/status/${userId}`);
+  }
+
 }
