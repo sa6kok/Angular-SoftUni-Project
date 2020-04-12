@@ -13,16 +13,13 @@ export class AppInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const fullURL = req.url.includes('http') ? req.url : `${apiURL}/${req.url}`;
-    const isApiRequest = fullURL.includes(apiURL);
-
     let authReq = req;
     const token = this.token.getToken();
     if (token != null) {
       authReq = req.clone({url: fullURL, headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
     } else {
-      authReq = req.clone({ url: fullURL });
+      authReq = req.clone({ url: fullURL});
     }
-    // need to change crdentials when loginready
     return next.handle(authReq);
   }
 }

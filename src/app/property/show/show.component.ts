@@ -35,7 +35,7 @@ export class ShowComponent implements OnInit {
   }
 
   sendProperty(propertyId: string) {
-    if (checkIfCommonElements(this.authService.getUser().roles, ['ROLE_HOST'])) {
+    if (checkIfCommonElements(this.authService.getUser()?.roles, ['ROLE_HOST'])) {
       this.router.navigate([`property/details/${propertyId}`]);
     } else {
     this.router.navigateByUrl(`/reservation/create/details/${propertyId}`,

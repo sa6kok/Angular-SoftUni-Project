@@ -14,7 +14,6 @@
       <div class="card-body">
           <h2 class="text-center">Reservation details</h2>
           <form id="reservationForm" class="form-horizontal" ngForm #resaForm="ngForm" (ngSubmit)="onSubmit(resaForm)">
-              <!--   th:action="@{/reservation/details/{id}(id=${model.getPropertyViewModel().getId()})}" -->
               <fieldset>
                  <app-details-property [selectedProperty]="currentProperty" (currentPropertyChild)="selectedPropertyHandler($event)"></app-details-property>
                  <ng-container *appRoleShow="['ROLE_GUEST']">

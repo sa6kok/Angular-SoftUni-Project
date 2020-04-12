@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CreateComponent } from './create/create.component';
 import { ShowComponent } from './show/show.component';
 import { SearchComponent } from './search/search.component';
-import { PropertyResolver } from './show/property.resolver';
+import { PropertyResolver } from './property.resolver';
 import { AuthGuard } from '../guards/auth.guard';
 import { DetailsPropertyComponent } from '../shared/details-property/details-property.component';
 

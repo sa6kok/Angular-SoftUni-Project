@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 
-import { PropertyService } from '../property.service';
+import { PropertyService } from './property.service';
 import { Observable } from 'rxjs';
-import { IProperty } from '../../shared/interfaces/property';
+import { IProperty } from '../shared/interfaces/property';
 
 @Injectable()
 export class PropertyResolver implements Resolve<IProperty[]> {

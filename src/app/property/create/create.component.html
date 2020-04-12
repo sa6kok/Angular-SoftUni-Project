@@ -73,22 +73,19 @@
                           <div class="form-label-group" >
                               <input type="text" id="inputsStreetNumberAddition" class="form-control" name="streetNumberAddition" placeholder="Street Number Addition"
                                       ngModel #streetNumberAddition="ngModel">
-                                     <p class="error-message" *ngIf="streetNumberAddition.touched && streetNumberAddition.invalid">Street number addition should not be empty</p>
-                              <label *ngIf="!streetNumberAddition.touched || streetNumberAddition.valid" for="inputsStreetNumberAddition">Street Number Addition (Optional)</label>
+                                      <label *ngIf="!streetNumberAddition.touched || streetNumberAddition.valid" for="inputsStreetNumberAddition">Street Number Addition (Optional)</label>
                           </div>
 
                           <div class="form-label-group">
                               <input type="number"  id="inputFloor" class="form-control" name="floor" placeholder="Floor"
-                                      ngModel #floor="ngModel" required appPositiveNumber>
-                              <p class="error-message" *ngIf="floor.touched && floor.invalid">Floor should be a positive number</p>
-                              <label *ngIf="!floor.touched || floor.valid" for="inputFloor">Floor</label>
+                                      ngModel #floor="ngModel" >
+                              <label *ngIf="!floor.touched || floor.valid" for="inputFloor">Floor (Optional)</label>
                           </div>
 
                           <div class="form-label-group">
                               <input type="number" id="inputApartment" class="form-control" name="apartment" placeholder="Apartment number"
-                                     ngModel #apartment="ngModel" required appPositiveNumber>
-                              <p class="error-message" *ngIf="apartment.touched && apartment.invalid">Apartment should be a positive number</p>
-                              <label *ngIf="!apartment.touched || apartment.valid" for="inputApartment">Apartment number</label>
+                                     ngModel #apartment="ngModel" >
+                              <label *ngIf="!apartment.touched || apartment.valid" for="inputApartment">Apartment number (Optonal)</label>
                           </div>
 
                           <div class="form-label-group">
@@ -107,7 +104,6 @@
               </div>
           </ng-container>
         </div>
-
     </ng-container>
 </div>
 

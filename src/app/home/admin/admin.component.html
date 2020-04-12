@@ -25,7 +25,7 @@
         </tr>
         </tbody>
 </table>
-<div class="card-body">
+<div class="card-body container">
 <h3 class="text-center">Add Country to DB</h3>
 <form class="form-signin" #countryForm="ngForm" (ngSubmit)="countrySubmit(countryForm)">
   <input type="text" ngModel #country="ngModel"  class="form-control" name="country"
@@ -33,7 +33,6 @@
          <p class="error-message" *ngIf="countryForm.touched && countryForm.invalid">Should not be empty!</p>
   <label for="picture">Write Country You want to add!</label>
   <button [disabled]="countryForm.invalid"  class="btn btn-lg btn-light btn-block text-uppercase">Add Country</button>
-  {{countryForm.value | json}}
 </form>
 
 <hr>
@@ -62,6 +61,5 @@
          <p class="error-message" *ngIf="cityForm.touched && cityForm.invalid">Should not be empty!</p>
   <label for="picture">Write the city to add!</label>
   <button [disabled]="cityForm.invalid"  class="btn btn-lg btn-light btn-block text-uppercase">Add City</button>
-{{cityForm.value | json}}
 </form>
 </div>

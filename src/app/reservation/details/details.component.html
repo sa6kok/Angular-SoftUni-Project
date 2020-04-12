@@ -42,9 +42,7 @@
             *ngIf="
               !reservation.canceled &&
               reservation.past &&
-              reservation.review === null
-            "
-          >
+              reservation.review === null">
           <ng-container *appRoleShow="['ROLE_GUEST']">
             <h3 class="text-center">Write a review</h3>
             <form ngForm #reviewForm="ngForm" (ngSubmit)="onSubmit(reviewForm, reservation.id)">
@@ -96,8 +94,6 @@
             Review description: {{ reservation.review.description }}
           </h4>
         </ng-container>
-
-        <!-- </ng-container> -->
         <app-details-property
           [selectedProperty]="reservation.property"
         ></app-details-property>

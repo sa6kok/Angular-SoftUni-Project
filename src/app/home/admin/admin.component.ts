@@ -52,6 +52,7 @@ export class AdminComponent implements OnInit {
     this.propertyService.addCountry(country).subscribe(resp => {
       if (resp) {
           this.toastr.success(`${country}${ADDED_SUCCESS}`);
+          countryForm.reset();
       } else  {
         this.toastr.error(`${country}${ADDED_FAIL}`);
       }
@@ -65,6 +66,7 @@ export class AdminComponent implements OnInit {
     this.propertyService.addCity(country, city).subscribe(resp => {
       if (resp) {
           this.toastr.success(`${city}${ADDED_SUCCESS}`);
+          cityForm.reset();
       } else  {
         this.toastr.error(`${city}${ADDED_FAIL}`);
       }

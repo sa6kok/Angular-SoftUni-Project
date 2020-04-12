@@ -8,7 +8,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { dateShowPipe } from '../shared/pipes/date-show';
 import { ReservationService } from '../reservation.service';
 import { Router } from '@angular/router';
-import { calculateStayFromStringDates } from '../shared/functions/calculate-stay';
+import { calculateStayFromStringDates } from '../../shared/functions/calculate-stay';
 import { ToastrService } from 'ngx-toastr';
 
 const RESERVATION_SUCCESS = 'Reservation made successfully!';
