@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IReservation } from '../shared/interfaces/reservation';
+import { IReservation } from '../../shared/interfaces/reservation';
 import { Location } from '@angular/common';
-import { IResaDetails } from 'src/app/reservation/shared/interfaces/reservation-details';
-import { IProperty } from 'src/app/property/shared/interfaces/property';
+import { IResaDetails } from 'src/app/shared/interfaces/reservation-details';
+import { IProperty } from 'src/app/shared/interfaces/property';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { dateShowPipe } from '../shared/pipes/date-show';
 import { ReservationService } from '../reservation.service';
@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 const RESERVATION_SUCCESS = 'Reservation made successfully!';
 const RESERVATION_FAIL = 'Resevation was not made!';
 const RESA_DETAILS = 'reservationDetails';
+const EMPTY_STRING = '';
 
 
 @Component({
@@ -97,7 +98,7 @@ export class DetailsCreateComponent implements OnInit {
   checkBusyDates() {
     this.service.checkBusyDates(this.currentProperty?.id, dateShowPipe(this.checkIn), dateShowPipe(this.checkOut))
       .subscribe(resp => {
-        if (resp === '') {
+        if (resp === EMPTY_STRING) {
           this.busyDates = null;
         } else {
           this.busyDates = resp;

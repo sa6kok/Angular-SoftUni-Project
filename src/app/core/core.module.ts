@@ -5,7 +5,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { CarouselPauseComponent } from './carousel-pause/carousel-pause.component';
-import { RoleShowDirective } from '../shared/directives/role-show.directive';
 import { SharedModule } from '../shared/shared.module';
 
 

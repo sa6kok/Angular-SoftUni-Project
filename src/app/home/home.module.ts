@@ -7,6 +7,7 @@ import { GuestComponent } from './guest/guest.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { AdminResolver } from './admin-resolver';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,7 +17,8 @@ import { AdminResolver } from './admin-resolver';
     CommonModule,
     CoreModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   providers: [AdminResolver]
 })

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { debounceTime, distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
-import { IUserCreate } from '../interfaces/user-register';
+import { IUserCreate } from '../../shared/interfaces/user-register';
 import { ToastrService } from 'ngx-toastr';
 
 const REGISTER_SUCCESS = 'Registration was succesfull! Please log in!';

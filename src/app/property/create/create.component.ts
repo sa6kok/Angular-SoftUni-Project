@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ICountry } from '../shared/interfaces/country';
-import { ICity } from '../shared/interfaces/city';
+import { ICountry } from '../../shared/interfaces/country';
+import { ICity } from '../../shared/interfaces/city';
 import { PropertyService } from '../property.service';
 import { Observable } from 'rxjs';
-import { IPropertyCreate } from '../shared/interfaces/property-create';
 import { Router } from '@angular/router';
 
 @Component({

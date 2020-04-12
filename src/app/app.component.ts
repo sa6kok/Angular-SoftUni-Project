@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IProperty } from './property/shared/interfaces/property';
+import { IProperty } from './shared/interfaces/property';
 
 @Component({
   selector: 'app-root',

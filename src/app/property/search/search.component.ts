@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ICountry } from '../shared/interfaces/country';
+import { ICountry } from '../../shared/interfaces/country';
 import { PropertyService } from '../property.service';
-import { ICity } from '../shared/interfaces/city';
+import { ICity } from '../../shared/interfaces/city';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -21,11 +21,8 @@ export class SearchComponent {
 
   constructor(
     private service: PropertyService,
-    private router: Router
-  ) {
+    private router: Router) {
   }
-
-
 
   setCities(country: string) {
     if (country === undefined) {
@@ -34,8 +31,7 @@ export class SearchComponent {
     }
     this.service.loadCities(country).subscribe(loadedCities => {
       this.cities = loadedCities;
-    }
-    );
+    });
   }
 
   checkIfProperties(city: string) {
@@ -49,7 +45,5 @@ export class SearchComponent {
       city = '';
     }
     this.router.navigate([`property/show/${country}`, { city }]);
-
   }
-
 }

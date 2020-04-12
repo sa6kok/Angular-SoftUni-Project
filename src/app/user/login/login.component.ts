@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IUserLogin } from '../interfaces/user-login';
+import { IUserLogin } from '../../shared/interfaces/user-login';
 import { UserService } from '../user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';

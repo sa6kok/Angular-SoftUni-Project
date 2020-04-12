@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IProperty } from '../shared/interfaces/property';
+import { IProperty } from '../../shared/interfaces/property';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { IResaDetails } from '../../reservation/shared/interfaces/reservation-details';
+import { IResaDetails } from '../../shared/interfaces/reservation-details';
 
 @Component({
   selector: 'app-show-property',

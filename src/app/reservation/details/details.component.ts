@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IReservation } from '../shared/interfaces/reservation';
+import { IReservation } from '../../shared/interfaces/reservation';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -27,7 +27,7 @@ export class DetailsComponent implements OnInit {
               private router: Router,
               private toastr: ToastrService) {
     activatedRoute.data.subscribe(data => this.reservations = data.reservationList);
-   }
+  }
 
   ngOnInit(): void {
   }
@@ -37,17 +37,17 @@ export class DetailsComponent implements OnInit {
   }
 
   isOwner(username: string): boolean {
-      return this.authService.getUsername() === username;
+    return this.authService.getUsername() === username;
   }
 
   payResa(reservationId: string) {
     this.reservationService.payResa(reservationId).subscribe(resp => {
-        if (resp) {
-          this.router.navigate(['/home/guest']);
-          this.toastr.success(RESA_PAYED);
-        } else {
-          this.toastr.error(RESA_NOT_PAYED);
-        }
+      if (resp) {
+        this.router.navigate(['/home/guest']);
+        this.toastr.success(RESA_PAYED);
+      } else {
+        this.toastr.error(RESA_NOT_PAYED);
+      }
     });
   }
 
@@ -59,7 +59,7 @@ export class DetailsComponent implements OnInit {
       } else {
         this.toastr.error(RESA_NOT_CANCELED);
       }
-  });
+    });
   }
 
 }

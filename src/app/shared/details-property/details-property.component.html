@@ -91,12 +91,12 @@
             <p class="btn btn-lg btn-light btn-block text-uppercase">No reviews for the property</p>
         </ng-container>
         <ng-container *ngIf="isOwner">
-        <form class="form-signin"
-              th:action="@{/property/add/picture/{id}(id=*{property.getId()})}" th:method="get">
-            <input type="text"  class="form-control" name="pictureUrl"
+        <form class="form-signin" #pictureForm="ngForm" (ngSubmit)="pictureSubmit(pictureForm, property.id)">
+            <input type="text" ngModel #pictureUrl="ngModel"  class="form-control" name="pictureUrl" pattern="^http.+$"
                    placeholder="Paste a Picture URL" required>
+                   <p class="error-message" *ngIf="pictureUrl.touched && pictureUrl.invalid">The URL from the picture should start with "http..."</p>
             <label for="picture">Paste a picture URL to add picture</label>
-            <button  class="btn btn-lg btn-light btn-block text-uppercase">Add Picture</button>
+            <button [disabled]="pictureForm.invalid"  class="btn btn-lg btn-light btn-block text-uppercase">Add Picture</button>
         </form>
       </ng-container>
 </div>

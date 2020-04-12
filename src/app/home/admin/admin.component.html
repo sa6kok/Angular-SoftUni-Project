@@ -25,3 +25,41 @@
         </tr>
         </tbody>
 </table>
+<div class="card-body">
+<h3 class="text-center">Add Country to DB</h3>
+<form class="form-signin" #countryForm="ngForm" (ngSubmit)="countrySubmit(countryForm)">
+  <input type="text" ngModel #country="ngModel"  class="form-control" name="country"
+         placeholder="Country Name" required>
+         <p class="error-message" *ngIf="countryForm.touched && countryForm.invalid">Should not be empty!</p>
+  <label for="picture">Write Country You want to add!</label>
+  <button [disabled]="countryForm.invalid"  class="btn btn-lg btn-light btn-block text-uppercase">Add Country</button>
+</form>
+
+<hr>
+<br>
+<h3 class="text-center">Add City to DB</h3>
+<form class="form-signin" #cityForm="ngForm" (ngSubmit)="citySubmit(cityForm)">
+  <div class="form-label-group">
+    <select
+      class="browser-default custom-select"
+      id="selectCountry1"
+      name="country"
+      ngModel
+      #optionCountry="ngModel"
+      required>
+      <option value="">Select Country</option>
+      <option *ngFor="let country of countries$ | async" [ngValue]="country">
+        {{ country.name }}</option
+        >
+    </select>
+    <label for="selectCountry1" class="col-md-7 control-label"
+      >Select Country</label
+    >
+  </div>
+  <input type="text" ngModel #city="ngModel"  class="form-control" name="city"
+         placeholder="City name!" required>
+         <p class="error-message" *ngIf="cityForm.touched && cityForm.invalid">Should not be empty!</p>
+  <label for="picture">Write the city to add!</label>
+  <button [disabled]="cityForm.invalid"  class="btn btn-lg btn-light btn-block text-uppercase">Add City</button>
+</form>
+</div>

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IUserCreate } from './interfaces/user-register';
+import { IUserCreate } from '../shared/interfaces/user-register';
 import { Observable } from 'rxjs';
-import { IUserLogin } from './interfaces/user-login';
-import { IUser } from '../home/interfaces/user';
+import { IUserLogin } from '../shared/interfaces/user-login';
+import { IUser } from '../shared/interfaces/user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

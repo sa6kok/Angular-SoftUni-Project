@@ -1,9 +1,10 @@
 export function checkIfCommonElements(first: string[], second: string[]): boolean {
   let result = false;
-  first.map(firstEl => {
-        if (second.includes(firstEl)) {
-          result = true;
-        }
-  });
+  for (const firstEl of first) {
+    if (second.includes(firstEl)) {
+      result = true;
+      break;
+    }
+  }
   return result;
 }

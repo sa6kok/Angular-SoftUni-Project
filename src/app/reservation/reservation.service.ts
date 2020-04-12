@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IReservation } from './shared/interfaces/reservation';
+import { IReservation } from '../shared/interfaces/reservation';
 import { Observable } from 'rxjs';
-import { IProperty } from '../property/shared/interfaces/property';
-import { IResaDetails } from './shared/interfaces/reservation-details';
+import { IProperty } from '../shared/interfaces/property';
+import { IResaDetails } from '../shared/interfaces/reservation-details';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { IResaCreate } from './shared/interfaces/reservation-create';
+import { IResaCreate } from '../shared/interfaces/reservation-create';
 import { dateShowPipe } from './shared/pipes/date-show';
 
 @Injectable({

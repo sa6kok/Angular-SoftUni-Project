@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SearchComponent } from './search/search.component';
 import { ShowComponent } from './show/show.component';
-import { ShortDescPipe } from './shared/pipes/short-desc.pipe';
-import { AverageReviewsPipe } from './shared/pipes/average-reviews.pipe';
+import { ShortDescPipe } from './pipes/short-desc.pipe';
+import { AverageReviewsPipe } from './pipes/average-reviews.pipe';
 import { PropertyRoutingModule } from './property-routing.module';
 
 

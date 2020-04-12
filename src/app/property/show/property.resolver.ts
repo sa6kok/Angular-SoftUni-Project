@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } 
 
 import { PropertyService } from '../property.service';
 import { Observable } from 'rxjs';
-import { IProperty } from '../shared/interfaces/property';
+import { IProperty } from '../../shared/interfaces/property';
 
 @Injectable()
 export class PropertyResolver implements Resolve<IProperty[]> {

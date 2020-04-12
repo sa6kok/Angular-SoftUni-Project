@@ -32,7 +32,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             errorMessage = `Error Status: ${error.status}\nMessage: ${error.message}`;
           }
           console.log(errorMessage);
-          return this.router.navigate([`error/${errorMessage}`]);
+          return this.router.navigate(['error'], { queryParams:  {error: errorMessage}});
         })
       );
   }

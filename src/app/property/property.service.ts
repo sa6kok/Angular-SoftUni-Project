@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ICountry } from './shared/interfaces/country';
-import { ICity } from './shared/interfaces/city';
-import { IProperty } from './shared/interfaces/property';
-import { IPropertyCreate } from './shared/interfaces/property-create';
+import { ICountry } from '../shared/interfaces/country';
+import { ICity } from '../shared/interfaces/city';
+import { IProperty } from '../shared/interfaces/property';
+import { IPropertyCreate } from '../shared/interfaces/property-create';
 
 @Injectable({
   providedIn: 'root'
@@ -43,13 +43,15 @@ export class PropertyService {
     return this.http.get<IProperty[]>('property/my');
   }
 
-
   saveProperty(property: IPropertyCreate): Observable<boolean> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-    return this.http.post<boolean>('property/create', property, httpOptions);
+    return this.http.post<boolean>('property/create', property);
+  }
+
+  addPicture(propertyId: string, pictureUrl: string) {
+    return this.http.post('property/picture/add', {propertyId , pictureUrl});
+  }
+
+  getProperty(id: string) {
+    return this.http.get(`property/details/${id}`);
   }
 }

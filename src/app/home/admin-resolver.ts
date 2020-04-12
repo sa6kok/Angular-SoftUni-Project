@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } 
 
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs';
-import { IUser } from './interfaces/user';
+import { IUser } from '../shared/interfaces/user';
 
 @Injectable()
 export class AdminResolver implements Resolve<IUser[]> {

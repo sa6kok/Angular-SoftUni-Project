@@ -1,6 +1,6 @@
-import { IProperty } from 'src/app/property/shared/interfaces/property';
-import { IReview } from 'src/app/property/shared/interfaces/review';
-import { ICity } from 'src/app/property/shared/interfaces/city';
+import { IProperty } from 'src/app/shared/interfaces/property';
+import { IReview } from 'src/app/shared/interfaces/review';
+import { ICity } from 'src/app/shared/interfaces/city';
 
 export interface IReservation {
    id: string;

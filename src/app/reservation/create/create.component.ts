@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
-import { ICountry } from 'src/app/property/shared/interfaces/country';
+import { ICountry } from 'src/app/shared/interfaces/country';
 import { PropertyService } from 'src/app/property/property.service';
 import { Observable} from 'rxjs';
-import { ICity } from 'src/app/property/shared/interfaces/city';
+import { ICity } from 'src/app/shared/interfaces/city';
 import { Router } from '@angular/router';
 import { dateShowPipe } from '../shared/pipes/date-show';
 
