@@ -7,6 +7,7 @@ import { IResaDetails } from '../shared/interfaces/reservation-details';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { IResaCreate } from '../shared/interfaces/reservation-create';
 import { dateShowPipe } from './shared/pipes/date-show';
+import { IReview } from '../shared/interfaces/review';
 
 @Injectable({
   providedIn: 'root'
@@ -78,5 +79,9 @@ export class ReservationService {
 
   cancelResa(id: string) {
     return this.http.get(`reservation/cancel/${id}`);
+  }
+
+  addReview(review: IReview, resaId: string) {
+    return this.http.post(`review/create/${resaId}`, review);
   }
 }

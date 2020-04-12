@@ -7,9 +7,12 @@ import { NgForm } from '@angular/forms';
 import { ICountry } from 'src/app/shared/interfaces/country';
 import { Observable } from 'rxjs';
 import { PropertyService } from 'src/app/property/property.service';
+import {titleCase } from 'src/app/shared/functions/title-case';
 
 const USER_STATUS_CHANGED = 'User status changed succesfully!';
 const USER_STATUS_NOT_CHANGED = 'User status was not chaged!';
+const ADDED_SUCCESS = ' was succesfully added to DB!';
+const ADDED_FAIL = ' was not added to DB!';
 
 @Component({
   selector: 'app-admin',
@@ -45,11 +48,27 @@ export class AdminComponent implements OnInit {
   }
 
   countrySubmit(countryForm: NgForm) {
+    const country = titleCase(countryForm.value.country);
+    this.propertyService.addCountry(country).subscribe(resp => {
+      if (resp) {
+          this.toastr.success(`${country}${ADDED_SUCCESS}`);
+      } else  {
+        this.toastr.error(`${country}${ADDED_FAIL}`);
+      }
+    });
 
   }
 
   citySubmit(cityForm: NgForm) {
-
+    const country = titleCase( cityForm.value.country.name);
+    const city = titleCase(cityForm.value.city);
+    this.propertyService.addCity(country, city).subscribe(resp => {
+      if (resp) {
+          this.toastr.success(`${city}${ADDED_SUCCESS}`);
+      } else  {
+        this.toastr.error(`${city}${ADDED_FAIL}`);
+      }
+    });
   }
 
 }

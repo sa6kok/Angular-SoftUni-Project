@@ -54,4 +54,12 @@ export class PropertyService {
   getProperty(id: string) {
     return this.http.get(`property/details/${id}`);
   }
+
+  addCity(country: string, city: string) {
+    return this.http.post('admin/city/add', {country, city});
+  }
+
+  addCountry(country: string) {
+    return this.http.post('admin/country/add', {country});
+  }
 }

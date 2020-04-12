@@ -5,6 +5,7 @@ import { ShowComponent } from './show/show.component';
 import { SearchComponent } from './search/search.component';
 import { PropertyResolver } from './show/property.resolver';
 import { AuthGuard } from '../guards/auth.guard';
+import { DetailsPropertyComponent } from '../shared/details-property/details-property.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: ['ROLE_GUEST'] }
       },
-      { path: 'search', component: SearchComponent }
+      { path: 'search', component: SearchComponent },
+      {
+        path: 'details/:id',
+        component: DetailsPropertyComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ROLE_HOST'] }
+      }
     ]
   },
 ];

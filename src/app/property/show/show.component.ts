@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IProperty } from '../../shared/interfaces/property';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { IResaDetails } from '../../shared/interfaces/reservation-details';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { checkIfCommonElements } from 'src/app/guards/common.elements';
 
 @Component({
   selector: 'app-show-property',
@@ -16,7 +18,7 @@ export class ShowComponent implements OnInit {
 
   reservationDetails: IResaDetails;
 
-  constructor(activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) {
     const endDate = activatedRoute.snapshot.paramMap.get('end');
     if (endDate !== null) {
       const startDate = activatedRoute.snapshot.paramMap.get('start');
@@ -33,12 +35,13 @@ export class ShowComponent implements OnInit {
   }
 
   sendProperty(propertyId: string) {
+    if (checkIfCommonElements(this.authService.getUser().roles, ['ROLE_HOST'])) {
+      this.router.navigate([`property/details/${propertyId}`]);
+    } else {
     this.router.navigateByUrl(`/reservation/create/details/${propertyId}`,
-    {
-      state: {
-        reservationDetails: this.reservationDetails
-      }
+     { state: {reservationDetails: this.reservationDetails}
     });
+  }
   }
 
 }

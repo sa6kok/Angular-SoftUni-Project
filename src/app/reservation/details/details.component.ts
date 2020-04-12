@@ -12,6 +12,9 @@ const RESA_NOT_CANCELED = 'The reservation was not canceled!';
 const RESA_PAYED = 'The reservation was payed successfully!';
 const RESA_NOT_PAYED = 'The reservation was not payed!';
 
+const REVIEW_ADDED = 'The review was successfully added to the reservation!';
+const REVIEW_NOT_ADDED = 'TThe review was not added to the reservation! Try again!';
+
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -32,8 +35,16 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(reviewForm: NgForm) {
-
+  onSubmit(reviewForm: NgForm, resaId: string) {
+    this.reservationService.addReview({level: Number(reviewForm.value.level),
+      description: reviewForm.value.description}, resaId).subscribe(resp => {
+        if (resp) {
+          this.router.navigate(['home/guest']);
+          this.toastr.success(REVIEW_ADDED);
+        } else {
+          this.toastr.success(REVIEW_NOT_ADDED);
+        }
+      });
   }
 
   isOwner(username: string): boolean {

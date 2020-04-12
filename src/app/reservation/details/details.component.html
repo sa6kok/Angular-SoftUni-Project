@@ -1,72 +1,107 @@
-<div *ngFor="let reservation of reservations" class="col-sm-7 col-md-8 col-lg-6 mx-auto">
+<div
+  *ngFor="let reservation of reservations"
+  class="col-sm-7 col-md-8 col-lg-6 mx-auto"
+>
   <p></p>
   <h2 class="text-center">Reservation details</h2>
-      <div class="card card-signin my-5">
-         <div class="card-body">
-                <fieldset>
-                    <h5 class="card-title">Reservation dates:</h5>
-                    <p>Check-In date: {{reservation.startDate | dateShowDb}}</p>
-                    <p>Check-Out date: {{reservation.endDate | dateShowDb}}</p>
-                    <p>Pax: {{reservation.occupancy}}</p>
-                    <p>Total price: {{reservation.totalPrice}}</p>
-                    <a *ngIf="reservation.payed" class="btn btn-lg btn-dark btn-block text-uppercase text-danger ">PAYED</a>
-                    <a *ngIf="reservation.canceled"
-                       class="btn btn-lg btn-dark btn-block text-uppercase text-danger">CANCELED</a>
-                       <ng-container *ngIf="isOwner(reservation.owner)">
-                    <ng-container *ngIf="!reservation.past">
-                        <ng-container *ngIf="!reservation.canceled">
+  <div class="card card-signin my-5">
+    <div class="card-body">
+      <fieldset>
+        <h5 class="card-title">Reservation dates:</h5>
+        <p>Check-In date: {{ reservation.startDate | dateShowDb }}</p>
+        <p>Check-Out date: {{ reservation.endDate | dateShowDb }}</p>
+        <p>Pax: {{ reservation.occupancy }}</p>
+        <p>Total price: {{ reservation.totalPrice }}</p>
+        <a
+          *ngIf="reservation.payed"
+          class="btn btn-lg btn-dark btn-block text-uppercase text-danger"
+          >PAYED</a
+        >
+        <a
+          *ngIf="reservation.canceled"
+          class="btn btn-lg btn-dark btn-block text-uppercase text-danger"
+          >CANCELED</a
+        >
+        <ng-container *ngIf="isOwner(reservation.owner)">
+          <ng-container *ngIf="!reservation.past && !reservation.canceled">
+              <a
+                *ngIf="!reservation.payed"
+                (click)="payResa(reservation.id)"
+                class="btn btn-lg btn-light btn-block text-uppercase confrmation"
+                >RESERVATION is NOT PAYED PAY NOW</a
+              >
+              <a
+                *ngIf="!reservation.canceled"
+                (click)="cancelResa(reservation.id)"
+                class="btn btn-lg btn-light btn-block text-uppercase confirmation"
+                >CANCEL RESERVATION</a
+              >
+          </ng-container>
 
-                            <a *ngIf="!reservation.payed" (click)="payResa(reservation.id)"
-                               class="btn btn-lg btn-light btn-block text-uppercase confrmation">RESERVATION is NOT
-                                PAYED PAY NOW</a>
-                        <a *ngIf="!reservation.canceled" (click)="cancelResa(reservation.id)"
-                           class="btn btn-lg btn-light btn-block text-uppercase confirmation">CANCEL RESERVATION</a>
-                    </ng-container>
-                    <ng-container *ngIf="!reservation.canceled">
-                        <ng-container *ngIf="reservation.past">
-                            <ng-container *ngIf="!reservation.review" >
-                            <ng-container *appRoleShow = "['ROLE_GUEST']">
-                                <h3 class="text-center">Write a review</h3>
-                                <form th:action="@{/review/create/{id}(id=${reservation.getId()})}"
-                                      ngForm #reviewForm="ngForm" (ngSubmit)="onSubmit(reviewForm)">
-                                    <div class="form-group">
-                                        <select class="form-control" name="level" required>
-                                            <option class="dropdown-item" value="10">10 - excellent</option>
-                                            <option class="dropdown-item" value="7">9</option>
-                                            <option class="dropdown-item" value="8">8</option>
-                                            <option class="dropdown-item" value="7">7</option>
-                                            <option class="dropdown-item" value="6">6</option>
-                                            <option class="dropdown-item" value="5">5</option>
-                                            <option class="dropdown-item" value="4">4</option>
-                                            <option class="dropdown-item" value="3">3</option>
-                                            <option class="dropdown-item" value="2">2</option>
-                                            <option class="dropdown-item" value="1">1 - very bad</option>
-                                        </select>
-                                        <label for="sel1">How happy were You with Your stay</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea ngModel #description="ngModel" class="form-control" rows="6"
-                                                  name="description" required></textarea>
-                                        <label for="descriptionTextarea">Tell us something more!</label>
-                                    </div>
-                                    <button
-                                            class="btn btn-lg btn-dark btn-block text-uppercase confirmation" [disabled]="reviewForm.invalid">Send the
-                                        review
-                                    </button>
-                                </form>
-                            </ng-container>
-                            </ng-container>
-                            <ng-container *ngIf="reservation.review">
-                                <h2 class="text-center" >Your Review for the Reservation</h2>
-                                <h3 class="text-center">Review note: {{reservation.review.level}}</h3>
-                                <h4 class="text-center">Review description: {{reservation.review.description}}</h4>
-                            </ng-container>
-                        </ng-container>
-                    </ng-container>
-                  </ng-container>
-                </ng-container>
-                    <app-details-property [selectedProperty]="reservation.property"></app-details-property>
-                </fieldset>
-            </div>
-        </div>
-      </div>
+          <ng-container
+            *ngIf="
+              !reservation.canceled &&
+              reservation.past &&
+              reservation.review === null
+            "
+          >
+          <ng-container *appRoleShow="['ROLE_GUEST']">
+            <h3 class="text-center">Write a review</h3>
+            <form ngForm #reviewForm="ngForm" (ngSubmit)="onSubmit(reviewForm, reservation.id)">
+              <div class="form-group">
+                <select class="form-control" name="level" ngModel required>
+                  <option class="dropdown-item" [ngValue]="10"
+                    >10 - excellent</option
+                  >
+                  <option class="dropdown-item" [ngValue]="9">9</option>
+                  <option class="dropdown-item" [ngValue]="8">8</option>
+                  <option class="dropdown-item" [ngValue]="7">7</option>
+                  <option class="dropdown-item" [ngValue]="6">6</option>
+                  <option class="dropdown-item" [ngValue]="5">5</option>
+                  <option class="dropdown-item" [ngValue]="4">4</option>
+                  <option class="dropdown-item" [ngValue]="3">3</option>
+                  <option class="dropdown-item" [ngValue]="2">2</option>
+                  <option class="dropdown-item" [ngValue]="1">1 - very bad</option>
+                </select>
+                <label for="sel1">How happy were You with Your stay</label>
+              </div>
+              <div class="form-group">
+                <textarea
+                  ngModel
+                  #description="ngModel"
+                  class="form-control"
+                  rows="6"
+                  name="description"
+                  minlength="8"
+                  required
+                ></textarea>
+                <label for="descriptionTextarea">Tell us something more!</label>
+              </div>
+              <button
+                class="btn btn-lg btn-dark btn-block text-uppercase confirmation"
+                [disabled]="reviewForm.invalid"
+              >
+                Send the review
+              </button>
+            </form>
+          </ng-container>
+        </ng-container>
+        </ng-container>
+        <ng-container *ngIf="reservation.review !== null">
+          <h2 class="text-center">Guest Review for the Reservation</h2>
+          <h3 class="text-center">
+            Review note: {{ reservation.review.level }}
+          </h3>
+          <h4 class="text-center">
+            Review description: {{ reservation.review.description }}
+          </h4>
+        </ng-container>
+
+        <!-- </ng-container> -->
+        <app-details-property
+          [selectedProperty]="reservation.property"
+        ></app-details-property>
+      </fieldset>
+    </div>
+  </div>
+</div>
