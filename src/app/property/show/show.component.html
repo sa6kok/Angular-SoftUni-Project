@@ -1,8 +1,8 @@
 <div class="container">
   <br>
     <ng-container *ngIf="properties?.length === 0" class="align-items-center">
-        <h2 class="text-center">No Properties for your search!</h2>
-        <a routerLink="/reservation/create"><h2 class="text-center">Search for other properties!</h2></a>
+        <h2 class="text-center">No Properties!</h2>
+        <a *appRoleShow="['ROLE_GUEST']" routerLink="/reservation/create"><h2 class="text-center">Search for other properties!</h2></a>
     </ng-container>
     <ng-container *ngIf="properties?.length !== 0">
     <div class="row" >

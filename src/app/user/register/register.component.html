@@ -17,7 +17,7 @@
                   <div class="form-label-group">
                       <label id="emailCheckHost" class="text-danger" *ngIf="(doesEmailExist$ | async) && email.valid">Email already exist. Please use another!</label>
                       <input type="email"  id="inputEmailHost" name="email" class="form-control" placeholder="Email address"
-                             ngModel #email="ngModel"  pattern="[a-zA-Z0-9.-_]{6,}@[a-zA-Z0-9]+.[a-zA-Z]{2,4}"  required
+                             ngModel #email="ngModel"  pattern="[a-zA-Z0-9.-_]{3,}@[a-zA-Z0-9]+.[a-zA-Z]{2,4}"  required
                              (keyup)="email.valid ? checkEmail($event.target.value) : null">
                       <p class="error-message" *ngIf="email.touched && email.invalid" >Email is not valid!</p>
                       <label *ngIf="!email.touched || email.valid" for="inputEmailHost">Email address </label>

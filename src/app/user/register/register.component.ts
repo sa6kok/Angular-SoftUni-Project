@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { UserService } from '../user.service';
@@ -15,7 +15,7 @@ const REGISTER_FAIL = 'Registration was not successfull!';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss', '../../../styles/error-styles.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   role: string;
 
@@ -27,11 +27,13 @@ export class RegisterComponent implements OnInit {
 
   emailSubject = new Subject<string>();
 
+  subscription: any;
+
   constructor(private activatedRoute: ActivatedRoute,
               private service: UserService,
               private router: Router,
               private toastr: ToastrService) {
-    this.activatedRoute.params.subscribe((params: Params) => {
+  this.subscription = this.activatedRoute.params.subscribe((params: Params) => {
         this.role = params.role;
     });
   }
@@ -81,4 +83,9 @@ export class RegisterComponent implements OnInit {
     this.emailSubject.next(email);
   }
 
+  ngOnDestroy(): void {
+    this.usernameSubject.unsubscribe();
+    this.emailSubject.unsubscribe();
+    this.subscription.unsubscribe();
+  }
 }
