@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { UserService } from '../user.service';
 import { debounceTime, distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
@@ -31,7 +31,9 @@ export class RegisterComponent implements OnInit {
               private service: UserService,
               private router: Router,
               private toastr: ToastrService) {
-    this.role = this.activatedRoute.snapshot.params.role;
+    this.activatedRoute.params.subscribe((params: Params) => {
+        this.role = params.role;
+    });
   }
 
   ngOnInit(): void {
@@ -69,10 +71,6 @@ export class RegisterComponent implements OnInit {
         this.toastr.error(REGISTER_FAIL);
       }
     });
-  }
-
-  refreshRole() {
-    this.role = this.activatedRoute.snapshot.params.role;
   }
 
   checkUsername(username: string) {
