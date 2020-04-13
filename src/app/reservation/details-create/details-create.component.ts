@@ -10,6 +10,7 @@ import { ReservationService } from '../reservation.service';
 import { Router } from '@angular/router';
 import { calculateStayFromStringDates } from '../../shared/functions/calculate-stay';
 import { ToastrService } from 'ngx-toastr';
+import { isOccupancyAllowed } from 'src/app/shared/functions/allowed-occupancy';
 
 const RESERVATION_SUCCESS = 'Reservation made successfully!';
 const RESERVATION_FAIL = 'Resevation was not made!';
@@ -30,8 +31,6 @@ export class DetailsCreateComponent implements OnInit {
 
   currentProperty: IProperty;
 
-  reservation: IReservation;
-
   reservationDetails: IResaDetails;
 
   busyDates: string;
@@ -40,20 +39,10 @@ export class DetailsCreateComponent implements OnInit {
 
   isOccupancyOk: boolean;
 
-  price: number;
-
-
-  constructor(private location: Location,
-              private service: ReservationService,
-              private router: Router,
-              private toastr: ToastrService) {
-
-  }
+  constructor(private location: Location, private service: ReservationService, private router: Router, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.reservationDetails = this.location.getState()[RESA_DETAILS];
-    if (this.reservationDetails) {
-    }
   }
 
   selectedPropertyHandler(property: IProperty) {
@@ -70,10 +59,6 @@ export class DetailsCreateComponent implements OnInit {
     }
   }
 
-  setToPay(checkPayment: boolean) {
-    this.toPay = checkPayment;
-  }
-
   selectCheckIn(selectedCheckIn: NgbDate) {
     this.checkIn = selectedCheckIn;
   }
@@ -86,13 +71,7 @@ export class DetailsCreateComponent implements OnInit {
   }
 
   checkOccupancy(occupancy: string) {
-    if (!occupancy) {
-      this.isOccupancyOk = false;
-    } else {
-      const max = this.currentProperty?.maxOccupancy;
-      const current = Number(occupancy);
-      this.isOccupancyOk = (current > max);
-    }
+    this.isOccupancyOk = isOccupancyAllowed(occupancy, this.currentProperty.maxOccupancy);
   }
 
   checkBusyDates() {

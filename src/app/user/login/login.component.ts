@@ -53,10 +53,10 @@ export class LoginComponent implements OnInit {
           return;
         }
         this.authService.login(data);
+        this.toastr.success(LOGIN_SUCCESFULL);
         if (this.returnUrl !== EMPTY_STRING) {
           return this.router.navigate([this.returnUrl]);
         }
-        this.toastr.success(LOGIN_SUCCESFULL);
         redirectHome(data.roles, this.router);
       },
       err => {

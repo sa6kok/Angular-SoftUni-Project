@@ -5,6 +5,7 @@ import { PropertyService } from '../property.service';
 import { ICity } from '../../shared/interfaces/city';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-property',
@@ -13,9 +14,9 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent {
 
-  countries$: Observable<ICountry[]> = this.service.loadCountries();
+  countries$: Observable<ICountry[]> = this.service.loadCountries().pipe(shareReplay(1));
 
-  cities: ICity[];
+  cities$: Observable<ICity[]>;
 
   hasNoProperties: boolean;
 
@@ -26,12 +27,10 @@ export class SearchComponent {
 
   setCities(country: string) {
     if (country === undefined) {
-      this.cities = [];
+      this.cities$ = new Observable<ICity[]>();
       return;
     }
-    this.service.loadCities(country).subscribe(loadedCities => {
-      this.cities = loadedCities;
-    });
+    this.cities$ = this.service.loadCities(country).pipe(shareReplay(1));
   }
 
   checkIfProperties(city: string) {

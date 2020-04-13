@@ -2,7 +2,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -18,6 +17,8 @@ import { AppInterceptor } from './interceptors/app-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { toastrConfig } from './shared/config/toastr-cofig';
+import { httpLoaderConfig } from './shared/config/ng-x-http-loader-config';
+import { routingLoaderConfig } from './shared/config/ng-x-routing-loader-config';
 
 @NgModule({
   declarations: [
@@ -30,8 +31,8 @@ import { toastrConfig } from './shared/config/toastr-cofig';
     BrowserAnimationsModule,
     ToastrModule.forRoot(toastrConfig),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderRouterModule.forRoot({ showForeground: false }),
-    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+    NgxUiLoaderRouterModule.forRoot(routingLoaderConfig),
+    NgxUiLoaderHttpModule.forRoot(httpLoaderConfig),
     NgbModule,
     CoreModule,
     ReservationModule,

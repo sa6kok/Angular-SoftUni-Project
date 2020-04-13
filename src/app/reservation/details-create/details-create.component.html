@@ -1,14 +1,3 @@
-<div id="multi-item-example" class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
-  <div class="carousel-inner" role="listbox">
-      <div class="col-md-3 mb-3" *ngFor="let picture of reservation?.property.pictures">
-          <div class="card">
-              <img class="img-fluid"
-                   [src]="picture"
-                   alt="Card image cap">
-          </div>
-      </div>
-  </div>
-</div>
 <div class="col-sm-7 col-md-8 col-lg-6 mx-auto">
   <div class="card card-signin my-5">
       <div class="card-body">
@@ -47,7 +36,7 @@
                       <div class="form-label-group col-md-5">
                           <input type="number" id="occupancyInput" class="form-control"
                                  ngModel #occupancy="ngModel" name="occupancy"
-                                 required appPositiveNumber (change)="checkOccupancy(occupancy.value)">
+                                 required appPositiveNumber (ngModelChange)="checkOccupancy(occupancy.value)">
                       </div>
                       <label *ngIf="!isOccupancyOk"  for="occupancyInput" class="col-md">Person <label *ngIf="occupancy.invalid && occupancy.touched" > should be a positive nimber!</label></label>
                       <label *ngIf="isOccupancyOk" class="error-message col-md" >Occupancy is higher than max occupancy!</label>
@@ -69,7 +58,7 @@
                   <p class="text-uppercase">Total price: {{totalAmount}}</p>
                  </ng-container>
                   <div class="custom-control custom-checkbox mb-3">
-                      <input ngModel #checkPayment="ngModel" (change)="setToPay(checkPayment.value)" type="checkbox" class="custom-control-input" id="checkPayment" name="checkPayment">
+                      <input ngModel #checkPayment="ngModel" (change)="toPay = checkPayment.value" type="checkbox" class="custom-control-input" id="checkPayment" name="checkPayment">
                       <label class="custom-control-label" for="checkPayment">Pay now (if You don't pay now You
                           need to pay until the end of the next day)</label>
                   </div>

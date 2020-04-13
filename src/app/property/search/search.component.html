@@ -13,14 +13,14 @@
                 #optionCountry="ngModel"
                 (change)="setCities(searchForm.value.country.name)"
                 required>
-                <option value="">Select Country</option>
+                <option value="" disabled>Select Country</option>
                 <option *ngFor="let country of countries$ | async" [ngValue]="country">
                   {{ country.name }}</option
                   >
               </select>
-              <label class="col-md-7 control-label error-message" *ngIf="optionCountry.dirty && (cities?.length === 0 || cities === undefined)"
+              <label class="col-md-7 control-label error-message" *ngIf="optionCountry.dirty && (cities$ | async)?.length === 0"
                  >No Cities.</label>
-              <label *ngIf="!optionCountry.dirty || cities?.length > 0" for="selectCountry1" class="col-md-7 control-label"
+              <label *ngIf="!optionCountry.dirty || (cities$ | async)?.length !== 0 " for="selectCountry1" class="col-md-7 control-label"
                 >Select Country</label
               >
             </div>
@@ -34,8 +34,8 @@
                 (change)="checkIfProperties(searchForm.value.city.name)"
                 required
               >
-                <option value="">Select City</option>
-                <option *ngFor="let city of cities" [ngValue]="city"
+                <option value="" disabled >Select City</option>
+                <option *ngFor="let city of cities$ | async" [ngValue]="city"
                   >{{ city.name }}
                 </option>
               </select>
@@ -44,13 +44,13 @@
               >
               <p for="selectCity1" class="error-message" *ngIf="hasNoProperties">No Properties. Change your search!</p>
             </div>
-            <button *ngIf="!optionCity.value"
+            <button *ngIf="!optionCity.value || hasNoProperties"
               class="btn btn-lg btn-dark btn-block text-uppercase"
-              [disabled]="!optionCountry.valid || (optionCountry.dirty && (cities?.length === 0 || cities === undefined))"
+              [disabled]="!optionCountry.valid || (optionCountry.dirty && (cities$ | async )?.length === 0)"
             >
               Search in the entire country
             </button>
-            <button *ngIf="!!optionCity.value"
+            <button *ngIf="!!optionCity.value && !hasNoProperties"
               class="btn btn-lg btn-dark btn-block text-uppercase"
               [disabled]="searchForm.invalid || hasNoProperties"
             >

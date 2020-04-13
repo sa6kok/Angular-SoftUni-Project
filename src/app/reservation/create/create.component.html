@@ -7,13 +7,17 @@
                   <fieldset>
                       <div class="form-label-group">
                           <select class="browser-default custom-select" id="selectCountry" name="country"
-                          ngModel  (change)="loadCities(createForm.value.country.name)" required>
-                              <option selected value="">Select Country</option>
+                          ngModel  (change)="loadCities(createForm.value.country.name)" #optionCountry="ngModel" required>
+                              <option disabled value="">Select Country</option>
                               <option *ngFor="let country of (countries$ | async)" [ngValue]="country"
                                       >{{country.name}}
                               </option>
                           </select>
-                          <label for="selectCountry" class="col-md-5 control-label">Select Country</label>
+                          <label class="col-md-7 control-label error-message" *ngIf="optionCountry.dirty && (cities$ | async)?.length === 0"
+                 >No Cities.</label>
+              <label *ngIf="!optionCountry.dirty || (cities$ | async)?.length > 0 || (cities$ | async)?.length !== 0" for="selectCountry1" class="col-md-7 control-label"
+                >Select Country</label
+              >
                       </div>
                       <div class="form-label-group">
                         <select class="browser-default custom-select" id="selectCity" name="city" ngModel required>

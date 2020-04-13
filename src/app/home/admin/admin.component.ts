@@ -61,7 +61,7 @@ export class AdminComponent implements OnInit {
   }
 
   citySubmit(cityForm: NgForm) {
-    const country = titleCase( cityForm.value.country.name);
+    const country = titleCase(cityForm.value.country.name);
     const city = titleCase(cityForm.value.city);
     this.propertyService.addCity(country, city).subscribe(resp => {
       if (resp) {

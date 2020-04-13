@@ -23,9 +23,9 @@ export class RegisterComponent implements OnInit {
 
   usernameSubject = new Subject<string>();
 
-  emailSubject = new Subject<string>();
-
   doesEmailExist$: Observable<boolean>;
+
+  emailSubject = new Subject<string>();
 
   constructor(private activatedRoute: ActivatedRoute,
               private service: UserService,

@@ -6,6 +6,7 @@ import { PropertyService } from '../property.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { shareReplay } from 'rxjs/operators';
 
 const PROPERTY_SUCCESS_CREATED = 'Your property was succesfully created!';
 const PROPERTY_NOT_CREATED = 'Your property was not created!';
@@ -19,19 +20,23 @@ export class CreateComponent implements OnInit {
 
   countries$: Observable<ICountry[]>;
 
-  cities: ICity[];
+  cities$: Observable<ICity[]>;
 
   constructor(private propertyService: PropertyService,
               private router: Router,
               private toastr: ToastrService) {
-    this.countries$ = this.propertyService.loadCountries();
+    this.countries$ = this.propertyService.loadCountries().pipe(shareReplay(1));
   }
 
   ngOnInit(): void {
   }
 
   setCities(country: string) {
-    this.propertyService.loadCities(country).subscribe(resp => this.cities = resp);
+    if (country === '') {
+      this.cities$ = new Observable<ICity[]>();
+      return;
+    }
+    this.cities$ = this.propertyService.loadCities(country).pipe(shareReplay(1));
   }
 
   onSubmit(form: NgForm) {

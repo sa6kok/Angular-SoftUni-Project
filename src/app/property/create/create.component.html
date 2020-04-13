@@ -37,20 +37,20 @@
                           <div class="form-label-group">
                             <select class="browser-default custom-select" id="selectCountryCreate" name="country"
                              (change)="setCities(createPropertyForm.value.country)" ngModel required #optionCountry="ngModel">
-                                <option  value="">Select Country</option>
+                                <option  value="" disabled>Select Country</option>
                                 <option *ngFor="let country of (countries$ | async)" [ngValue]="country?.name">
                                   {{country?.name}}
                                 </option>
                             </select>
                             <label for="selectCountryCreate">Country</label>
-                            <label class="col-md-7 control-label error-message" *ngIf="optionCountry.touched && optionCountry.dirty && (cities?.length === 0 || cities === undefined)"
+                            <label class="col-md-7 control-label error-message" *ngIf="optionCountry.touched && optionCountry.dirty && (cities$ | async)?.length === 0"
                             >No Cities.</label>
                         </div>
 
                           <div class="form-label-group">
                               <select class="browser-default custom-select" id="selectCityCreate" name="city" ngModel required>
-                                  <option  value="">Select City</option>
-                                  <option *ngFor="let city of cities" [ngValue]="city?.name">
+                                  <option  value="" disabled>Select City</option>
+                                  <option *ngFor="let city of cities$ | async" [ngValue]="city?.name">
                                     {{city?.name}}
                                   </option>
                               </select>
@@ -95,7 +95,7 @@
                               <label *ngIf="!maxOccupancy.touched || maxOccupancy.valid" for="inputMaxOccupancy">Max Occupancy</label>
                           </div>
 
-                          <button class="btn btn-lg btn-dark btn-block text-uppercase" [disabled]="createPropertyForm.invalid || cities?.length == 0">Create
+                          <button class="btn btn-lg btn-dark btn-block text-uppercase" [disabled]="createPropertyForm.invalid || (cities$ | async)?.length == 0">Create
                               Property
                           </button>
                           <hr class="my-4">
