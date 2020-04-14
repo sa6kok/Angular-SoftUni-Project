@@ -4,7 +4,7 @@
           <div class="card-img-left d-none d-md-flex">
           </div>
           <div class="card-body">
-              <h5 class="card-title text-center">Register as {{role | uppercase}}</h5>
+              <h5 class="card-title text-center">Register as {{role | titlecase}}</h5>
               <form class="form-signin" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
                   <div class="form-label-group">
                       <label class="text-danger" *ngIf="doesUsernameExist$ | async" >Username already exist. Please pick another!</label>
